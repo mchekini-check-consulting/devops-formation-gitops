@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: microservices
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          - list:
+              elements:
+                - name: catalog
+                  repo: https://github.com/mchekini-check-consulting/devops-formation-catalog.git
+          - list:
+              elements:
+                - env: dev
+                  namespace: dev
+                - env: qualif
+                  namespace: qualif
+                - env: prod
+                  namespace: prod
+  template:
+    metadata:
+      name: "{{.name}}-{{.env}}"
+    spec:
+      project: default
+      sources:
+        - repoURL: "{{.repo}}"
+          targetRevision: main
+          path: helm/
+          helm:
+            valueFiles:
+              - $values/environments/{{.env}}/40-applications/{{.name}}/values.yaml
+        - repoURL: https://github.com/juba-touam/devops-formation-gitops.git
+          targetRevision: main
+          ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{.namespace}}"
+      ignoreDifferences:
+        - group: apps
+          kind: Deployment
+          jsonPointers:
+            - /spec/replicas
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=false

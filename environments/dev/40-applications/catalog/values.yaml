@@ -1,0 +1,57 @@
+image:
+  tag: # sha-slugbranch-timestamp
+
+namespace: dev
+
+replicaCount: 2
+
+resources:
+  requests:
+    cpu: 15m
+    memory: 150Mi
+  limits:
+    cpu: 50m
+    memory: 200Mi
+
+initContainer:
+  env:
+    - name: DB_HOST
+      value: "postgres-primary.dev.svc.cluster.local"
+    - name: DB_SSL
+      value: "true"
+    - name: PGSSLMODE
+      value: "no-verify"
+    - name: NODE_TLS_REJECT_UNAUTHORIZED
+      value: "0"
+
+configmap:
+  DB_HOST: "pgcat.dev.svc.cluster.local"
+  DB_PORT: "5432"
+  DB_NAME: "catalogue"
+  DB_SSL: "false"
+  PGSSLMODE: "disable"
+  CORS_ALLOW_ALL_ORIGINS: "TRUE"
+  LOG_LEVEL: "DEBUG"
+
+secret:
+  enabled: true
+  data:
+    DB_USER: formation
+    DB_PASSWORD: test
+
+hpa:
+  minReplicas: 2
+  maxReplicas: 4
+  cpu:
+    averageUtilization: 70
+  memory:
+    averageUtilization: 80
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      percent: 100
+      periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      percent: 25
+      periodSeconds: 60
