@@ -1,0 +1,43 @@
+image:
+  tag: # sha-slugbranch-timestamp
+
+namespace: prod
+
+replicaCount: 2
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 411Mi
+  limits:
+    cpu: "1"
+    memory: 1520Mi
+
+configmap:
+  SPRING_PROFILES_ACTIVE: "prod"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://pgcat.prod.svc.cluster.local:5432/payment?sslmode=disable"
+  LOG_LEVEL: "WARN"
+
+secret:
+  enabled: true
+  data:
+    SPRING_DATASOURCE_USERNAME: formation
+    SPRING_DATASOURCE_PASSWORD: test
+    APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=1311ad53-6ac0-4946-bb2f-48c60120bbd9;IngestionEndpoint=https://francecentral-1.in.applicationinsights.azure.com/;LiveEndpoint=https://francecentral.livediagnostics.monitor.azure.com/;ApplicationId=d9efc03e-0523-42cc-9e0e-1ea237ed1ba4"
+
+hpa:
+  minReplicas: 2
+  maxReplicas: 4
+  cpu:
+    averageUtilization: 70
+  memory:
+    averageUtilization: 80
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      percent: 100
+      periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      percent: 25
+      periodSeconds: 60

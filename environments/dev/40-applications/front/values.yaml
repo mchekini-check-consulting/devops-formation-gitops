@@ -1,0 +1,65 @@
+image:
+  tag: # sha-slugbranch-timestamp
+
+namespace: dev
+
+replicaCount: 2
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+configmap:
+  CATALOG: "http://98.66.248.206/api/products"
+  ORDERS: "http://98.66.248.206/api/orders"
+  PAYMENT: "http://98.66.248.206/api/payments"
+  AUTH_ENABLED: "false"
+
+ingress:
+  enabled: true
+  name: ecommerce-ingress
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  routes:
+    - path: /api/products
+      pathType: Prefix
+      service:
+        name: catalogue
+        port: 4000
+    - path: /api/orders
+      pathType: Prefix
+      service:
+        name: order
+        port: 8000
+    - path: /api/payments
+      pathType: Prefix
+      service:
+        name: payment
+        port: 8082
+    - path: /
+      pathType: Prefix
+      service:
+        name: front
+        port: 80
+
+hpa:
+  minReplicas: 2
+  maxReplicas: 4
+  cpu:
+    averageUtilization: 70
+  memory:
+    averageUtilization: 80
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      percent: 100
+      periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      percent: 25
+      periodSeconds: 60

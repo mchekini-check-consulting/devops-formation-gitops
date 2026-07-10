@@ -15,6 +15,10 @@ spec:
                   repo: https://github.com/mchekini-check-consulting/devops-formation-catalog.git
                 - name: order
                   repo: https://github.com/mchekini-check-consulting/devops-formation-order.git
+                - name: payment
+                  repo: https://github.com/mchekini-check-consulting/devops-formation-payment.git
+                - name: front
+                  repo: https://github.com/mchekini-check-consulting/devops-formation-front.git
           - list:
               elements:
                 - env: dev
