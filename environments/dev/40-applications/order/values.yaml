@@ -1,0 +1,59 @@
+image:
+  tag: # sha-slugbranch-timestamp
+
+namespace: dev
+
+replicaCount: 2
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+initContainer:
+  enabled: true
+  name: migrate
+  command:
+    - python
+    - manage.py
+    - migrate
+    - --no-input
+  env:
+    - name: POSTGRES_HOST
+      value: "postgres-primary.dev.svc.cluster.local"
+
+configmap:
+  DJANGO_SETTINGS_MODULE: "config.settings.local"
+  DJANGO_ALLOWED_HOSTS: "*"
+  POSTGRES_HOST: "pgcat.dev.svc.cluster.local"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "order"
+  POSTGRES_SSLMODE: "disable"
+  CORS_ALLOW_ALL_ORIGINS: "TRUE"
+  LOG_LEVEL: "DEBUG"
+  ENV_NAME: "prod"
+
+secret:
+  POSTGRES_USER: formation
+  POSTGRES_PASSWORD: test
+  DJANGO_SECRET_KEY: "django-insecure-aks-dev-change-in-prod"
+
+hpa:
+  minReplicas: 2
+  maxReplicas: 4
+  cpu:
+    averageUtilization: 70
+  memory:
+    averageUtilization: 80
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      percent: 100
+      periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      percent: 25
+      periodSeconds: 60

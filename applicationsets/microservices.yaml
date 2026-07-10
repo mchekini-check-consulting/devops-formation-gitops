@@ -13,6 +13,8 @@ spec:
               elements:
                 - name: catalog
                   repo: https://github.com/mchekini-check-consulting/devops-formation-catalog.git
+                - name: order
+                  repo: https://github.com/mchekini-check-consulting/devops-formation-order.git
           - list:
               elements:
                 - env: dev
