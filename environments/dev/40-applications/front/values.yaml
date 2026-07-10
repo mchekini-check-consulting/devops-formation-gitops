@@ -1,10 +1,7 @@
 image:
-  tag: # sha-slugbranch-timestamp
-
+  tag: f799093-system-pullrequest-t-202607101810 # sha-slugbranch-timestamp
 namespace: dev
-
 replicaCount: 2
-
 resources:
   requests:
     cpu: 50m
@@ -12,13 +9,11 @@ resources:
   limits:
     cpu: 200m
     memory: 128Mi
-
 configmap:
   CATALOG: "http://98.66.248.206/api/products"
   ORDERS: "http://98.66.248.206/api/orders"
   PAYMENT: "http://98.66.248.206/api/payments"
   AUTH_ENABLED: "false"
-
 ingress:
   enabled: true
   name: ecommerce-ingress
@@ -46,7 +41,6 @@ ingress:
       service:
         name: front
         port: 80
-
 hpa:
   minReplicas: 2
   maxReplicas: 4
