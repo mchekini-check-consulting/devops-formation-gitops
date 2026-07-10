@@ -41,7 +41,7 @@ secret:
 
 hpa:
   minReplicas: 2
-  maxReplicas: 6
+  maxReplicas: 4
   cpu:
     averageUtilization: 70
   memory:
