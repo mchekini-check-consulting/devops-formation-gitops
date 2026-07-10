@@ -1,5 +1,5 @@
 image:
-  tag: # sha-slugbranch-timestamp
+  tag: af92902-main-20260710135625 # sha-slugbranch-timestamp
 
 namespace: prod
 
