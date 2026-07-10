@@ -31,9 +31,18 @@ configmap:
   LOG_LEVEL: "DEBUG"
   ENV_NAME: "prod"
 secret:
+<<<<<<< Updated upstream
   POSTGRES_USER: formation
   POSTGRES_PASSWORD: test
   DJANGO_SECRET_KEY: "django-insecure-aks-dev-change-in-prod"
+=======
+  enabled: true
+  data:
+    POSTGRES_USER: formation
+    POSTGRES_PASSWORD: test
+    DJANGO_SECRET_KEY: "django-insecure-aks-dev-change-in-prod"
+
+>>>>>>> Stashed changes
 hpa:
   minReplicas: 2
   maxReplicas: 4

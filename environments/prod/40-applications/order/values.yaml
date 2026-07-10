@@ -37,9 +37,11 @@ configmap:
   ENV_NAME: "prod"
 
 secret:
-  POSTGRES_USER: formation
-  POSTGRES_PASSWORD: test
-  DJANGO_SECRET_KEY: "django-insecure-aks-dev-change-in-prod"
+  enabled: true
+  data:
+    POSTGRES_USER: formation
+    POSTGRES_PASSWORD: test
+    DJANGO_SECRET_KEY: "django-insecure-aks-dev-change-in-prod"
 
 hpa:
   minReplicas: 2
