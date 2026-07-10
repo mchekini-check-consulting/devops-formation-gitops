@@ -1,5 +1,5 @@
 image:
-  tag: f799093-system-pullrequest-t-202607101810 # sha-slugbranch-timestamp
+  tag: 513a882-main-202607101851 # sha-slugbranch-timestamp
 namespace: dev
 replicaCount: 2
 resources:
