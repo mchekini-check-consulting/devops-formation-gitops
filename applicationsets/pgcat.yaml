@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: network-policies
+  name: pgcat
   namespace: argocd
 spec:
   goTemplate: true
@@ -17,17 +17,19 @@ spec:
             namespace: prod
   template:
     metadata:
-      name: "network-policies-{{.env}}"
+      name: "pgcat-{{.env}}"
     spec:
       project: default
       sources:
         - repoURL: https://github.com/mchekini-check-consulting/devops-formation-utils.git
           targetRevision: main
-          path: k8s/helm/network-policies/
+          path: k8s/helm/pgcat/
           helm:
-            parameters:
-              - name: namespace
-                value: "{{.namespace}}"
+            valueFiles:
+              - $values/environments/{{.env}}/10-operators/pgcat/values.yaml
+        - repoURL: https://github.com/juba-touam/devops-formation-gitops.git
+          targetRevision: main
+          ref: values
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{.namespace}}"
