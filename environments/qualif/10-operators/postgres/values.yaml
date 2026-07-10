@@ -1,0 +1,32 @@
+namespace: qualif
+
+replicaCount: 2
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+storage:
+  className: postgres-standard-ssd
+  size: 2Gi
+
+patroni:
+  ttl: 30
+  loopWait: 10
+  retryTimeout: 10
+  maxLagOnFailover: 1048576
+  postgresql:
+    usePgRewind: true
+    maxConnections: 150
+    walKeepSize: "128MB"
+    hotStandbyFeedback: "on"
+
+storageClass:
+  create: false
+
+pdb:
+  minAvailable: 2
