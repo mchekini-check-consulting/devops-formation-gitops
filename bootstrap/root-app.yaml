@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/juba-touam/devops-formation-gitops.git
+    repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
     targetRevision: main
     path: applicationsets/
   destination:

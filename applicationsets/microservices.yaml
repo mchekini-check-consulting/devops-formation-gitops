@@ -39,7 +39,7 @@ spec:
           helm:
             valueFiles:
               - $values/environments/{{.env}}/40-applications/{{.name}}/values.yaml
-        - repoURL: https://github.com/juba-touam/devops-formation-gitops.git
+        - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
           targetRevision: main
           ref: values
       destination:
