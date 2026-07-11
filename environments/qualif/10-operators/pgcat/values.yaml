@@ -1,4 +1,0 @@
-namespace: qualif
-
-postgres:
-  replicaCount: 2
