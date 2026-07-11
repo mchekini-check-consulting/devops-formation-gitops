@@ -23,8 +23,6 @@ spec:
               elements:
                 - env: dev
                   namespace: dev
-                - env: qualif
-                  namespace: qualif
                 - env: prod
                   namespace: prod
   template:

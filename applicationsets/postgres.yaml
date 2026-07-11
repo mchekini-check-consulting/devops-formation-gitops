@@ -11,8 +11,6 @@ spec:
         elements:
           - env: dev
             namespace: dev
-          - env: qualif
-            namespace: qualif
           - env: prod
             namespace: prod
   template:
@@ -27,8 +25,8 @@ spec:
           helm:
             valueFiles:
               - $values/environments/{{.env}}/10-operators/postgres/values.yaml
-        - repoURL: https://github.com/juba-touam/devops-formation-gitops.git
-          targetRevision: main
+        - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
+          targetRevision: feat/postgres
           ref: values
       destination:
         server: https://kubernetes.default.svc

@@ -1,6 +1,6 @@
 namespace: dev
 
-replicaCount: 3
+replicaCount: 2
 
 resources:
   requests:
