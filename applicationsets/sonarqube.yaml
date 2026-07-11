@@ -16,8 +16,7 @@ spec:
     # Source 2 : manifests statiques (postgresql + secrets)
     - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
       targetRevision: feat/postgres
-      path: base/tools/sonarqube/
-      exclude: "sonarqube-values.yaml"
+      path: base/tools/sonarqube/manifests/
     # Source 3 : ref pour $values
     - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
       targetRevision: feat/postgres
