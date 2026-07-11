@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sonarqube
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    # Source 1 : chart Helm SonarQube (SonarSource officiel)
+    - repoURL: https://SonarSource.github.io/helm-chart-sonarqube
+      chart: sonarqube
+      targetRevision: "*"
+      helm:
+        valueFiles:
+          - $values/base/tools/sonarqube/sonarqube-values.yaml
+    # Source 2 : manifests statiques (postgresql + secrets)
+    - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
+      targetRevision: feat/postgres
+      path: base/tools/sonarqube/
+      exclude: "sonarqube-values.yaml"
+    # Source 3 : ref pour $values
+    - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
+      targetRevision: feat/postgres
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sonarqube
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
