@@ -34,7 +34,7 @@ spec:
       project: default
       sources:
         - repoURL: "{{.repo}}"
-          targetRevision: feat/postgres
+          targetRevision: main
           path: helm/
           helm:
             valueFiles:
