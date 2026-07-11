@@ -1,0 +1,79 @@
+community:
+  enabled: true
+
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+
+# Exposition via Azure LoadBalancer (IP publique assignée par AKS)
+# Pour un LB interne (intra-VNet), décommenter l'annotation ci-dessous
+service:
+  type: LoadBalancer
+  externalPort: 9000
+  internalPort: 9000
+  annotations: {}
+  # annotations:
+  #   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+
+ingress:
+  enabled: false
+
+resources:
+  limits:
+    cpu: 800m
+    memory: 2560Mi
+  requests:
+    cpu: 400m
+    memory: 1536Mi
+
+# JVM heaps optimisés pour 4 projets en formation
+jvmOpts: "-Xmx512m -Xms512m"
+jvmCEOpts: "-Xmx512m -Xms512m"
+searchJavaOpts: "-Xmx512m -Xms512m"
+
+# Paramètres noyau requis par Elasticsearch (embarqué dans SonarQube)
+initSysctl:
+  enabled: true
+  vmMaxMapCount: 524288
+  fsFileMax: 131072
+  nofile: 131072
+  nproc: 8192
+
+persistence:
+  enabled: true
+  storageClass: "managed-premium"
+  accessMode: ReadWriteOnce
+  size: 10Gi
+
+# Secrets référencés depuis des Kubernetes Secrets (pas de valeurs en clair)
+# Créer les secrets avec :
+#   kubectl create secret generic sonarqube-admin-secret -n sonarqube \
+#     --from-literal=password=<admin_password> --from-literal=currentPassword=admin
+#   kubectl create secret generic sonarqube-monitoring-secret -n sonarqube \
+#     --from-literal=monitoringPasscode=<passcode>
+#   kubectl create secret generic sonarqube-jdbc-secret -n sonarqube \
+#     --from-literal=jdbc-password=<db_password>
+
+monitoringPasscodeSecretName: "sonarqube-monitoring-secret"
+monitoringPasscodeSecretKey: "monitoringPasscode"
+
+setAdminPassword:
+  passwordSecretName: "sonarqube-admin-secret"
+
+# PostgreSQL déployé séparément (voir postgresql.yaml)
+postgresql:
+  enabled: false
+
+jdbcOverwrite:
+  enable: true
+  jdbcUrl: "jdbc:postgresql://sonarqube-postgresql:5432/sonarqube"
+  jdbcUsername: "sonarqube"
+  jdbcSecretName: "sonarqube-jdbc-secret"
+  jdbcSecretPasswordKey: "jdbc-password"
+
+prometheusExporter:
+  enabled: false
+
+plugins:
+  install: []
