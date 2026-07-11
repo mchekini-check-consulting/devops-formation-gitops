@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: velero
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    # Source 1 : chart Helm Velero (VMware Tanzu)
+    - repoURL: https://vmware-tanzu.github.io/helm-charts
+      chart: velero
+      targetRevision: "*"
+      helm:
+        valueFiles:
+          - $values/base/tools/velero/velero-values.yaml
+    # Source 2 : manifests statiques (VolumeSnapshotClass)
+    - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
+      targetRevision: feat/postgres
+      path: base/tools/velero/manifests/
+    # Source 3 : ref pour $values
+    - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
+      targetRevision: feat/postgres
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: velero
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
