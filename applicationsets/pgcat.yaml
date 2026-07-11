@@ -22,7 +22,7 @@ spec:
       project: default
       sources:
         - repoURL: https://github.com/mchekini-check-consulting/devops-formation-utils.git
-          targetRevision: feat/postgres
+          targetRevision: main
           path: k8s/helm/pgcat/
           helm:
             valueFiles:
