@@ -1,0 +1,7 @@
+# namespace: ingress-nginx
+controller:
+  replicaCount: 2
+  service:
+    type: LoadBalancer
+  nodeSelector:
+    kubernetes.io/os: linux
