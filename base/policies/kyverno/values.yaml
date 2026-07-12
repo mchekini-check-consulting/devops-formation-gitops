@@ -11,6 +11,8 @@ excludeNamespaces:
   - argocd
   - ingress-nginx
   - sonarqube
+  - calico-system
+  - tigera-operator
 
 # Registries autorises
 allowedRegistries:
