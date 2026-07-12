@@ -9,7 +9,7 @@ spec:
     # Source 1 : chart Helm Kyverno
     - repoURL: https://kyverno.github.io/kyverno/
       chart: kyverno
-      targetRevision: "*"
+      targetRevision: "~3"
       helm:
         valueFiles:
           - $values/base/tools/kyverno/kyverno-values.yaml
