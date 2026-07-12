@@ -2,7 +2,7 @@
 validationFailureAction: Audit
 
 # Namespaces ou les policies sont en mode Enforce (bloquant)
-enforceNamespaces: []
+enforceNamespaces: [prod]
 
 # Namespaces systeme exclus des policies
 excludeNamespaces:
