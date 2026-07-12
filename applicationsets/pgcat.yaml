@@ -26,7 +26,7 @@ spec:
             valueFiles:
               - $values/environments/{{.env}}/10-operators/pgcat/values.yaml
         - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
-          targetRevision: feat/postgres
+          targetRevision: main
           ref: values
       destination:
         server: https://kubernetes.default.svc

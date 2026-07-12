@@ -1,0 +1,27 @@
+# Mode par defaut : Audit (ne bloque pas, genere des PolicyReports)
+failureAction: Audit
+
+# Namespaces ou les policies sont en mode Enforce (bloquant)
+enforceNamespaces: []
+
+# Namespaces systeme exclus des policies
+excludeNamespaces:
+  - kube-system
+  - kyverno
+  - argocd
+  - ingress-nginx
+  - sonarqube
+
+# Registries autorises
+allowedRegistries:
+  - "docker.io/library/*"
+  - "docker.io/bitnami/*"
+  - "ghcr.io/*"
+  - "registry.k8s.io/*"
+  - "quay.io/*"
+  - "*.azurecr.io/*"
+
+# Labels obligatoires
+requiredLabels:
+  - "app.kubernetes.io/name"
+  - "app.kubernetes.io/managed-by"
