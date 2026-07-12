@@ -1,0 +1,32 @@
+admissionController:
+  replicas: 1
+  resources:
+    limits:
+      memory: 384Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+backgroundController:
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+
+cleanupController:
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+
+reportsController:
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi

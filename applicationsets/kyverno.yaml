@@ -1,25 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ingress-nginx
+  name: kyverno
   namespace: argocd
 spec:
   project: default
   sources:
-    # Source 1 : chart Helm ingress-nginx
-    - repoURL: https://kubernetes.github.io/ingress-nginx
-      chart: ingress-nginx
+    # Source 1 : chart Helm Kyverno
+    - repoURL: https://kyverno.github.io/kyverno/
+      chart: kyverno
       targetRevision: "*"
       helm:
         valueFiles:
-          - $values/base/tools/ingress-nginx/ingress-nginx-values.yaml
+          - $values/base/tools/kyverno/kyverno-values.yaml
     # Source 2 : ref pour $values
     - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
       targetRevision: main
       ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: ingress-nginx
+    namespace: kyverno
   syncPolicy:
     automated:
       prune: true

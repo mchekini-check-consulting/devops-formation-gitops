@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
-    targetRevision: feat/postgres
+    targetRevision: main
     path: applicationsets/
   destination:
     server: https://kubernetes.default.svc
