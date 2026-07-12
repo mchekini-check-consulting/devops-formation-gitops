@@ -1,5 +1,5 @@
 # Mode par defaut : Audit (ne bloque pas, genere des PolicyReports)
-failureAction: Audit
+validationFailureAction: Audit
 
 # Namespaces ou les policies sont en mode Enforce (bloquant)
 enforceNamespaces: []
