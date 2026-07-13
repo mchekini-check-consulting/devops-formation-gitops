@@ -32,6 +32,15 @@ secret:
   data:
     DB_USER: formation
     DB_PASSWORD: test
+ingress:
+  name: catalogue-ingress-prod
+rollout:
+  enabled: true
+  strategy:
+    canary:
+      trafficRouting:
+        nginx:
+          stableIngress: catalogue-ingress-prod
 hpa:
   minReplicas: 2
   maxReplicas: 4
