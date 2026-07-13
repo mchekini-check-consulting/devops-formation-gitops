@@ -14,6 +14,8 @@ configmap:
   ORDERS: "http://98.66.248.206/api/orders"
   PAYMENT: "http://98.66.248.206/api/payments"
   AUTH_ENABLED: "false"
+rollout:
+  enabled: true
 ingress:
   enabled: true
   name: front-ingress-prod
