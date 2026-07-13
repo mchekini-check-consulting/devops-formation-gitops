@@ -36,6 +36,8 @@ secret:
     POSTGRES_USER: formation
     POSTGRES_PASSWORD: test
     DJANGO_SECRET_KEY: "django-insecure-aks-dev-change-in-prod"
+ingress:
+  name: order-ingress-dev
 hpa:
   minReplicas: 2
   maxReplicas: 4

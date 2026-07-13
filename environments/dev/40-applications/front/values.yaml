@@ -16,21 +16,11 @@ configmap:
   AUTH_ENABLED: "false"
 ingress:
   enabled: true
-  name: ecommerce-ingress
+  name: front-ingress-dev
   className: nginx
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
   routes:
-    - path: /api/orders
-      pathType: Prefix
-      service:
-        name: order
-        port: 8000
-    - path: /api/payments
-      pathType: Prefix
-      service:
-        name: payment
-        port: 8082
     - path: /
       pathType: Prefix
       service:

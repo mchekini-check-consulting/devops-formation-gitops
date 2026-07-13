@@ -15,7 +15,14 @@ configmap:
   PAYMENT: "http://98.66.248.206/api/payments"
   AUTH_ENABLED: "false"
 ingress:
-  enabled: false
+  enabled: true
+  name: front-ingress-prod
+  routes:
+    - path: /
+      pathType: Prefix
+      service:
+        name: front
+        port: 80
 hpa:
   minReplicas: 2
   maxReplicas: 4
