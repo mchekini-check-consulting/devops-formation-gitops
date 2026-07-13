@@ -35,12 +35,7 @@ secret:
 ingress:
   name: catalogue-ingress-dev
 rollout:
-  enabled: true
-  strategy:
-    canary:
-      trafficRouting:
-        nginx:
-          stableIngress: catalogue-ingress-dev
+  enabled: false
 hpa:
   minReplicas: 2
   maxReplicas: 4
