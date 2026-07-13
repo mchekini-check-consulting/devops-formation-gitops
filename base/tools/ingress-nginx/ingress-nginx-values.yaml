@@ -1,6 +1,8 @@
 # namespace: ingress-nginx
 controller:
   replicaCount: 2
+  admissionWebhooks:
+    enabled: false
   service:
     type: LoadBalancer
   nodeSelector:
