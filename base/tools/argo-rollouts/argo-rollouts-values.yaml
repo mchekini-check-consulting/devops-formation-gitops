@@ -12,6 +12,8 @@ clusterInstall: true
 
 dashboard:
   enabled: true
+  extraArgs:
+    - --namespace=prod
   service:
     type: ClusterIP
     port: 3100
