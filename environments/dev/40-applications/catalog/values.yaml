@@ -32,6 +32,8 @@ secret:
   data:
     DB_USER: formation
     DB_PASSWORD: test
+rollout:
+  enabled: true
 hpa:
   minReplicas: 2
   maxReplicas: 4
