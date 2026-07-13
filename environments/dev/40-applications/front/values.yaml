@@ -21,11 +21,6 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
   routes:
-    - path: /api/products
-      pathType: Prefix
-      service:
-        name: catalogue
-        port: 4000
     - path: /api/orders
       pathType: Prefix
       service:
