@@ -50,6 +50,10 @@ spec:
           kind: Deployment
           jsonPointers:
             - /spec/replicas
+        - kind: Pod
+          jsonPointers:
+            - /metadata/annotations/deploy.kubernetes.io~1date
+            - /metadata/annotations/deploy.kubernetes.io~1source
       syncPolicy:
         automated:
           prune: true
