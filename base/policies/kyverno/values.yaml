@@ -13,6 +13,7 @@ excludeNamespaces:
   - sonarqube
   - calico-system
   - tigera-operator
+  - vault
 
 # Registries autorises
 allowedRegistries:
