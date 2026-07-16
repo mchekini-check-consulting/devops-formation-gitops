@@ -1,0 +1,58 @@
+server:
+  standalone:
+    enabled: true
+    config: |
+      ui = true
+
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+
+      storage "file" {
+        path = "/vault/data"
+      }
+
+      seal "azurekeyvault" {
+        tenant_id      = "6902d3b0-d2cd-4bc6-98ac-143e83b162d7"
+        vault_name     = "kv-formation-security"
+        key_name       = "vault-unseal-key"
+      }
+
+  ha:
+    enabled: false
+
+  dataStorage:
+    enabled: true
+    size: 1Gi
+    storageClass: managed-csi
+
+  auditStorage:
+    enabled: true
+    size: 1Gi
+    storageClass: managed-csi
+
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+
+  nodeSelector:
+    kubernetes.azure.com/agentpool: db
+
+  serviceAccount:
+    annotations:
+      azure.workload.identity/client-id: "bfb756b0-1b58-40eb-aa7d-af77dc624670"
+
+  extraLabels:
+    azure.workload.identity/use: "true"
+
+ui:
+  enabled: true
+
+injector:
+  enabled: false  # on utilise ESO, pas le sidecar injector
