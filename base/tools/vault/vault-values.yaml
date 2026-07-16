@@ -1,25 +1,20 @@
 server:
-  ha:
-    enabled: true
-    replicas: 3
-    raft:
-      enabled: true
-      config: |
-        ui = true
-
-        listener "tcp" {
-          tls_disable = 1
-          address = "[::]:8200"
-          cluster_address = "[::]:8201"
-        }
-
-        storage "raft" {
-          path = "/vault/data"
-        }
-
-        service_registration "kubernetes" {}
-
   standalone:
+    enabled: true
+    config: |
+      ui = true
+
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+
+      storage "file" {
+        path = "/vault/data"
+      }
+
+  ha:
     enabled: false
 
   dataStorage:
@@ -46,14 +41,6 @@ server:
       operator: "Equal"
       value: "database"
       effect: "NoSchedule"
-
-  topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: kubernetes.io/hostname
-      whenUnsatisfiable: ScheduleAnyway
-      labelSelector:
-        matchLabels:
-          app.kubernetes.io/name: vault
 
   serviceAccount:
     annotations:
