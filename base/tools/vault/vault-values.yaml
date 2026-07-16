@@ -41,6 +41,12 @@ server:
   nodeSelector:
     kubernetes.azure.com/agentpool: db
 
+  tolerations:
+    - key: "workload"
+      operator: "Equal"
+      value: "database"
+      effect: "NoSchedule"
+
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname
