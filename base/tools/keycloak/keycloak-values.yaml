@@ -40,6 +40,9 @@ resources:
 keycloakConfigCli:
   enabled: true
   existingConfigmap: keycloak-realm-config
+  image:
+    registry: docker.io
+    repository: bitnamilegacy/keycloak-config-cli
   resources:
     requests:
       cpu: 50m
