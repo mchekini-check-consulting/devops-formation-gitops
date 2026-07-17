@@ -1,5 +1,5 @@
 image:
-  tag: 3c688e5-main-20260713135037 # sha-slugbranch-timestamp
+  tag: 60becf9-main-20260717111547 # sha-slugbranch-timestamp
 namespace: dev
 replicaCount: 2
 resources:
@@ -29,7 +29,6 @@ configmap:
   LOG_LEVEL: "DEBUG"
 secret:
   enabled: false
-
 externalSecret:
   enabled: true
   vaultPath: dev/catalog
