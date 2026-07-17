@@ -10,7 +10,7 @@ spec:
   sources:
     - repoURL: https://charts.bitnami.com/bitnami
       chart: keycloak
-      targetRevision: "*"
+      targetRevision: "25.1.2"
       helm:
         valueFiles:
           - $values/base/tools/keycloak/keycloak-values.yaml
