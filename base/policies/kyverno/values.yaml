@@ -15,6 +15,7 @@ excludeNamespaces:
   - tigera-operator
   - vault
   - external-secrets
+  - reloader
 
 # Registries autorises
 allowedRegistries:
