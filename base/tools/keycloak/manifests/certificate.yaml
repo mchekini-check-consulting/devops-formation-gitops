@@ -5,7 +5,7 @@ metadata:
 spec:
   secretName: keycloak-tls
   issuerRef:
-    name: selfsigned-issuer
+    name: ca-issuer
     kind: ClusterIssuer
   ipAddresses:
     - "51.11.203.15"
