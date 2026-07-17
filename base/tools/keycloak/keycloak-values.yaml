@@ -25,10 +25,6 @@ externalDatabase:
 service:
   type: LoadBalancer
 
-tls:
-  enabled: true
-  existingSecret: keycloak-tls
-
 ingress:
   enabled: false
 
