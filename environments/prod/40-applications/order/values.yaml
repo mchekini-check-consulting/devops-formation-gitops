@@ -31,11 +31,11 @@ configmap:
   LOG_LEVEL: "WARNING"
   ENV_NAME: "prod"
 secret:
+  enabled: false
+
+externalSecret:
   enabled: true
-  data:
-    POSTGRES_USER: formation
-    POSTGRES_PASSWORD: test
-    DJANGO_SECRET_KEY: "django-insecure-aks-dev-change-in-prod"
+  vaultPath: prod/order
 ingress:
   name: order-ingress-prod
 hpa:

@@ -28,10 +28,11 @@ configmap:
   CORS_ALLOW_ALL_ORIGINS: "FALSE"
   LOG_LEVEL: "WARNING"
 secret:
+  enabled: false
+
+externalSecret:
   enabled: true
-  data:
-    DB_USER: formation
-    DB_PASSWORD: test
+  vaultPath: prod/catalog
 ingress:
   name: catalogue-ingress-prod
 rollout:
