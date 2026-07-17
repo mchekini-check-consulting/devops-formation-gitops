@@ -17,9 +17,9 @@ certificate:
   ipAddresses:
     - "40.66.61.108"
 configmap:
-  CATALOG: "http://98.66.248.206/api/products"
-  ORDERS: "http://98.66.248.206/api/orders"
-  PAYMENT: "http://98.66.248.206/api/payments"
+  CATALOG: "https://98.66.248.206/api/products"
+  ORDERS: "https://98.66.248.206/api/orders"
+  PAYMENT: "https://98.66.248.206/api/payments"
   AUTH_ENABLED: "true"
   KEYCLOAK_URL: "https://51.11.203.15"
   KEYCLOAK_REALM: "formation"
