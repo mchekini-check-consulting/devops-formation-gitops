@@ -3,7 +3,8 @@ global:
     allowInsecureImages: true
 
 image:
-  registry: registry.bitnami.com
+  registry: docker.io
+  repository: bitnamilegacy/keycloak
 
 auth:
   adminUser: admin
