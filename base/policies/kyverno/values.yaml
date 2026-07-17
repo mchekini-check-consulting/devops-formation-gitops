@@ -27,6 +27,7 @@ allowedRegistries:
   - "registry.k8s.io/*"
   - "quay.io/*"
   - "*.azurecr.io/*"
+  - "registry.bitnami.com/*"
 
 # Labels obligatoires
 requiredLabels:
