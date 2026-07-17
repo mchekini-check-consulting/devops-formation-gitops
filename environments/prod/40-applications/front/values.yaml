@@ -18,7 +18,7 @@ certificate:
   secretName: front-prod-tls
   issuer: selfsigned-issuer
   ipAddresses:
-    - "REPLACE_WITH_PROD_LB_IP"
+    - "40.66.61.108"
 configmap:
   CATALOG: "http://98.66.248.206/api/products"
   ORDERS: "http://98.66.248.206/api/orders"

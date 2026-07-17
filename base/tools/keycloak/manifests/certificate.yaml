@@ -8,4 +8,4 @@ spec:
     name: selfsigned-issuer
     kind: ClusterIssuer
   ipAddresses:
-    - "REPLACE_WITH_KEYCLOAK_LB_IP"
+    - "51.11.203.15"
