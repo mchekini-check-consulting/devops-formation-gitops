@@ -16,6 +16,8 @@ excludeNamespaces:
   - vault
   - external-secrets
   - reloader
+  - cert-manager
+  - keycloak
 
 # Registries autorises
 allowedRegistries:

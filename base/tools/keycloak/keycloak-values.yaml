@@ -1,0 +1,30 @@
+auth:
+  adminUser: admin
+  existingSecret: keycloak-secret
+  passwordSecretKey: KEYCLOAK_ADMIN_PASSWORD
+
+postgresql:
+  enabled: false
+
+externalDatabase:
+  host: postgres.dev.svc.cluster.local
+  port: 5432
+  user: keycloak
+  database: keycloak
+  existingSecret: keycloak-secret
+  existingSecretPasswordKey: KEYCLOAK_DB_PASSWORD
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hostname: keycloak.local
+  tls: true
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-issuer
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    memory: 1Gi
