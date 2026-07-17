@@ -24,6 +24,16 @@ externalDatabase:
 
 service:
   type: LoadBalancer
+  ports:
+    https: 443
+  extraPorts:
+    - name: https
+      port: 443
+      targetPort: 8443
+
+tls:
+  enabled: true
+  existingSecret: keycloak-tls
 
 ingress:
   enabled: false

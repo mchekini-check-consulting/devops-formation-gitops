@@ -21,7 +21,7 @@ configmap:
   ORDERS: "http://98.66.248.206/api/orders"
   PAYMENT: "http://98.66.248.206/api/payments"
   AUTH_ENABLED: "true"
-  KEYCLOAK_URL: "http://51.11.203.15"
+  KEYCLOAK_URL: "https://51.11.203.15"
   KEYCLOAK_REALM: "formation"
   KEYCLOAK_CLIENT_ID: "frontend-app"
 rollout:
