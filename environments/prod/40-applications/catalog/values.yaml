@@ -1,5 +1,5 @@
 image:
-  tag: 3c688e5-main-20260713135037 # sha-slugbranch-timestamp
+  tag: 6df10c4-main-20260717113253 # sha-slugbranch-timestamp
 namespace: prod
 replicaCount: 2
 resources:
@@ -29,7 +29,6 @@ configmap:
   LOG_LEVEL: "WARNING"
 secret:
   enabled: false
-
 externalSecret:
   enabled: true
   vaultPath: prod/catalog
