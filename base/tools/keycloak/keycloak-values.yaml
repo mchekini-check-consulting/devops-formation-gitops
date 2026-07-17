@@ -25,7 +25,7 @@ externalDatabase:
 ingress:
   enabled: true
   ingressClassName: nginx
-  hostname: keycloak.local
+  hostname: keycloak.internal
   tls: true
   annotations:
     cert-manager.io/cluster-issuer: selfsigned-issuer

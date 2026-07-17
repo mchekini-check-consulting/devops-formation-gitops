@@ -20,12 +20,12 @@ ingress:
   enabled: true
   name: front-ingress-prod
   className: nginx
-  host: front-prod.local
+  host: front-prod.internal
   annotations:
     cert-manager.io/cluster-issuer: selfsigned-issuer
   tls:
     - hosts:
-        - front-prod.local
+        - front-prod.internal
       secretName: front-prod-tls
   routes:
     - path: /

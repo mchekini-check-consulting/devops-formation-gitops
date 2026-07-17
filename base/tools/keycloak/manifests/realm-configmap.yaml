@@ -25,7 +25,7 @@ data:
       "users": [
         {
           "username": "admin",
-          "email": "admin@formation.local",
+          "email": "admin@formation.internal",
           "emailVerified": true,
           "enabled": true,
           "credentials": [
@@ -39,7 +39,7 @@ data:
         },
         {
           "username": "consumer",
-          "email": "consumer@formation.local",
+          "email": "consumer@formation.internal",
           "emailVerified": true,
           "enabled": true,
           "credentials": [
@@ -61,13 +61,13 @@ data:
           "directAccessGrantsEnabled": true,
           "redirectUris": [
             "http://localhost:*",
-            "https://front-dev.local/*",
-            "https://front-prod.local/*"
+            "https://front-dev.internal/*",
+            "https://front-prod.internal/*"
           ],
           "webOrigins": [
             "http://localhost:*",
-            "https://front-dev.local",
-            "https://front-prod.local"
+            "https://front-dev.internal",
+            "https://front-prod.internal"
           ],
           "attributes": {
             "pkce.code.challenge.method": "S256"
@@ -81,7 +81,7 @@ data:
           "serviceAccountsEnabled": true,
           "secret": "kong-gateway-secret",
           "redirectUris": [
-            "https://kong.local/*"
+            "https://kong.internal/*"
           ],
           "webOrigins": []
         }
