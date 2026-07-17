@@ -9,9 +9,6 @@ resources:
   limits:
     cpu: 200m
     memory: 128Mi
-service:
-  type: LoadBalancer
-  port: 80
 certificate:
   enabled: true
   name: front-prod-cert
@@ -27,7 +24,19 @@ configmap:
 rollout:
   enabled: true
 ingress:
-  enabled: false
+  enabled: true
+  name: front-ingress-prod
+  className: nginx-prod
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  tls:
+    - secretName: front-prod-tls
+  routes:
+    - path: /
+      pathType: Prefix
+      service:
+        name: front
+        port: 80
 hpa:
   minReplicas: 2
   maxReplicas: 4
