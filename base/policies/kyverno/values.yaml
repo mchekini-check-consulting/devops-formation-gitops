@@ -14,6 +14,7 @@ excludeNamespaces:
   - calico-system
   - tigera-operator
   - vault
+  - external-secrets
 
 # Registries autorises
 allowedRegistries:
