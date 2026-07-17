@@ -13,7 +13,10 @@ configmap:
   CATALOG: "http://98.66.248.206/api/products"
   ORDERS: "http://98.66.248.206/api/orders"
   PAYMENT: "http://98.66.248.206/api/payments"
-  AUTH_ENABLED: "false"
+  AUTH_ENABLED: "true"
+  KEYCLOAK_URL: "http://51.11.203.15"
+  KEYCLOAK_REALM: "formation"
+  KEYCLOAK_CLIENT_ID: "frontend-app"
 certificate:
   enabled: true
   name: front-dev-cert
