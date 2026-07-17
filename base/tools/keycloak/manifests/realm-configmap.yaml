@@ -61,13 +61,11 @@ data:
           "directAccessGrantsEnabled": true,
           "redirectUris": [
             "http://localhost:*",
-            "https://front-dev.internal/*",
-            "https://front-prod.internal/*"
+            "http://*",
+            "https://*"
           ],
           "webOrigins": [
-            "http://localhost:*",
-            "https://front-dev.internal",
-            "https://front-prod.internal"
+            "*"
           ],
           "attributes": {
             "pkce.code.challenge.method": "S256"
@@ -81,7 +79,8 @@ data:
           "serviceAccountsEnabled": true,
           "secret": "kong-gateway-secret",
           "redirectUris": [
-            "https://kong.internal/*"
+            "http://*",
+            "https://*"
           ],
           "webOrigins": []
         }
