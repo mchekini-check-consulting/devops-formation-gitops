@@ -1,5 +1,5 @@
 image:
-  tag: b8a5d4e-main-20260713005604 # sha-slugbranch-timestamp
+  tag: c447575-main-20260717111946 # sha-slugbranch-timestamp
 namespace: dev
 replicaCount: 2
 resources:
@@ -32,7 +32,6 @@ configmap:
   ENV_NAME: "prod"
 secret:
   enabled: false
-
 externalSecret:
   enabled: true
   vaultPath: dev/order
