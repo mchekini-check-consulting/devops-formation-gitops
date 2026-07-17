@@ -1,5 +1,5 @@
 image:
-  tag: ca77a86-main-20260710174738 # sha-slugbranch-timestamp
+  tag: 42a362d-main-20260717113734 # sha-slugbranch-timestamp
 namespace: prod
 replicaCount: 2
 resources:
@@ -15,7 +15,6 @@ configmap:
   LOG_LEVEL: "WARN"
 secret:
   enabled: false
-
 externalSecret:
   enabled: true
   vaultPath: prod/payment
