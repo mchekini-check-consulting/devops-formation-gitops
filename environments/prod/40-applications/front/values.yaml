@@ -19,6 +19,14 @@ rollout:
 ingress:
   enabled: true
   name: front-ingress-prod
+  className: nginx
+  host: front-prod.local
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-issuer
+  tls:
+    - hosts:
+        - front-prod.local
+      secretName: front-prod-tls
   routes:
     - path: /
       pathType: Prefix

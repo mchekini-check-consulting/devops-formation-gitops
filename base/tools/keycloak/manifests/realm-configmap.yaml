@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keycloak-realm-config
+data:
+  formation-realm.json: |
+    {
+      "realm": "formation",
+      "enabled": true,
+      "registrationAllowed": true,
+      "verifyEmail": false,
+      "loginWithEmailAllowed": true,
+      "roles": {
+        "realm": [
+          {
+            "name": "admin",
+            "description": "Administrator role"
+          },
+          {
+            "name": "consumer",
+            "description": "Consumer role"
+          }
+        ]
+      },
+      "users": [
+        {
+          "username": "admin",
+          "email": "admin@formation.local",
+          "emailVerified": true,
+          "enabled": true,
+          "credentials": [
+            {
+              "type": "password",
+              "value": "admin123",
+              "temporary": false
+            }
+          ],
+          "realmRoles": ["admin"]
+        },
+        {
+          "username": "consumer",
+          "email": "consumer@formation.local",
+          "emailVerified": true,
+          "enabled": true,
+          "credentials": [
+            {
+              "type": "password",
+              "value": "admin123",
+              "temporary": false
+            }
+          ],
+          "realmRoles": ["consumer"]
+        }
+      ],
+      "clients": [
+        {
+          "clientId": "frontend-app",
+          "enabled": true,
+          "publicClient": true,
+          "standardFlowEnabled": true,
+          "directAccessGrantsEnabled": true,
+          "redirectUris": [
+            "http://localhost:*",
+            "https://front-dev.local/*",
+            "https://front-prod.local/*"
+          ],
+          "webOrigins": [
+            "http://localhost:*",
+            "https://front-dev.local",
+            "https://front-prod.local"
+          ],
+          "attributes": {
+            "pkce.code.challenge.method": "S256"
+          }
+        },
+        {
+          "clientId": "kong-gateway",
+          "enabled": true,
+          "publicClient": false,
+          "standardFlowEnabled": true,
+          "serviceAccountsEnabled": true,
+          "secret": "kong-gateway-secret",
+          "redirectUris": [
+            "https://kong.local/*"
+          ],
+          "webOrigins": []
+        }
+      ]
+    }
