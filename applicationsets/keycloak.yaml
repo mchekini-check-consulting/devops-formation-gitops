@@ -16,6 +16,9 @@ spec:
           - $values/base/tools/keycloak/keycloak-values.yaml
     - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
       targetRevision: main
+      path: base/tools/keycloak/manifests
+    - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
+      targetRevision: main
       ref: values
   destination:
     server: https://kubernetes.default.svc

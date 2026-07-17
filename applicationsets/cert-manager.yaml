@@ -16,6 +16,9 @@ spec:
           - $values/base/tools/cert-manager/cert-manager-values.yaml
     - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
       targetRevision: main
+      path: base/tools/cert-manager/manifests
+    - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
+      targetRevision: main
       ref: values
   destination:
     server: https://kubernetes.default.svc
