@@ -18,13 +18,13 @@ ingress:
   enabled: true
   name: front-ingress-dev
   className: nginx
-  host: front-dev.local
+  host: front-dev.internal
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
     cert-manager.io/cluster-issuer: selfsigned-issuer
   tls:
     - hosts:
-        - front-dev.local
+        - front-dev.internal
       secretName: front-dev-tls
   routes:
     - path: /
