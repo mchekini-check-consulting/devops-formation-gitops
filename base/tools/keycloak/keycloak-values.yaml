@@ -22,13 +22,15 @@ externalDatabase:
   existingSecret: keycloak-secret
   existingSecretPasswordKey: KEYCLOAK_DB_PASSWORD
 
-ingress:
+service:
+  type: LoadBalancer
+
+tls:
   enabled: true
-  ingressClassName: nginx
-  hostname: keycloak.internal
-  tls: true
-  annotations:
-    cert-manager.io/cluster-issuer: selfsigned-issuer
+  existingSecret: keycloak-tls
+
+ingress:
+  enabled: false
 
 resources:
   requests:

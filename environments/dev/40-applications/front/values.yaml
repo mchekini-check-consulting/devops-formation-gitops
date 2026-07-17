@@ -14,18 +14,21 @@ configmap:
   ORDERS: "http://98.66.248.206/api/orders"
   PAYMENT: "http://98.66.248.206/api/payments"
   AUTH_ENABLED: "false"
+certificate:
+  enabled: true
+  name: front-dev-cert
+  secretName: front-dev-tls
+  issuer: selfsigned-issuer
+  ipAddresses:
+    - "98.66.248.206"
 ingress:
   enabled: true
   name: front-ingress-dev
   className: nginx
-  host: front-dev.internal
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    cert-manager.io/cluster-issuer: selfsigned-issuer
   tls:
-    - hosts:
-        - front-dev.internal
-      secretName: front-dev-tls
+    - secretName: front-dev-tls
   routes:
     - path: /
       pathType: Prefix

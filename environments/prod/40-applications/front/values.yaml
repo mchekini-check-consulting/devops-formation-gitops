@@ -9,6 +9,16 @@ resources:
   limits:
     cpu: 200m
     memory: 128Mi
+service:
+  type: LoadBalancer
+  port: 80
+certificate:
+  enabled: true
+  name: front-prod-cert
+  secretName: front-prod-tls
+  issuer: selfsigned-issuer
+  ipAddresses:
+    - "REPLACE_WITH_PROD_LB_IP"
 configmap:
   CATALOG: "http://98.66.248.206/api/products"
   ORDERS: "http://98.66.248.206/api/orders"
@@ -17,22 +27,7 @@ configmap:
 rollout:
   enabled: true
 ingress:
-  enabled: true
-  name: front-ingress-prod
-  className: nginx
-  host: front-prod.internal
-  annotations:
-    cert-manager.io/cluster-issuer: selfsigned-issuer
-  tls:
-    - hosts:
-        - front-prod.internal
-      secretName: front-prod-tls
-  routes:
-    - path: /
-      pathType: Prefix
-      service:
-        name: front
-        port: 80
+  enabled: false
 hpa:
   minReplicas: 2
   maxReplicas: 4
