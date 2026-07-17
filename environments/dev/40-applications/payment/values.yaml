@@ -1,5 +1,5 @@
 image:
-  tag: 4a80691-main-20260713120249 # sha-slugbranch-timestamp
+  tag: c507823-main-20260717111603 # sha-slugbranch-timestamp
 namespace: dev
 replicaCount: 2
 resources:
@@ -15,7 +15,6 @@ configmap:
   LOG_LEVEL: "INFO"
 secret:
   enabled: false
-
 externalSecret:
   enabled: true
   vaultPath: dev/payment
