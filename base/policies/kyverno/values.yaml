@@ -18,6 +18,8 @@ excludeNamespaces:
   - reloader
   - cert-manager
   - keycloak
+  - ingress-nginx-prod
+  - istio-system
 
 # Registries autorises
 allowedRegistries:
@@ -28,6 +30,7 @@ allowedRegistries:
   - "quay.io/*"
   - "*.azurecr.io/*"
   - "docker.io/bitnamilegacy/*"
+  - "docker.io/istio/*"
 
 # Labels obligatoires
 requiredLabels:
