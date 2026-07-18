@@ -29,3 +29,10 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+  ignoreDifferences:
+    - kind: Secret
+      name: keycloak-tls
+      namespace: keycloak
+      jsonPointers:
+        - /data
