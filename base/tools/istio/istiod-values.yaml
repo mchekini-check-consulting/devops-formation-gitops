@@ -1,0 +1,12 @@
+pilot:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+
+meshConfig:
+  defaultConfig:
+    holdApplicationUntilProxyStarts: true
+  accessLogFile: /dev/stdout
