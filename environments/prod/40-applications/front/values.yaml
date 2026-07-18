@@ -24,6 +24,9 @@ configmap:
   KEYCLOAK_URL: "https://51.11.203.15"
   KEYCLOAK_REALM: "formation"
   KEYCLOAK_CLIENT_ID: "frontend-app"
+networkPolicy:
+  extraIngressNamespaces:
+    - ingress-nginx-prod
 rollout:
   enabled: true
 ingress:
