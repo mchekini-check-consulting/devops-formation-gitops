@@ -21,6 +21,7 @@ externalSecret:
   vaultPath: prod/payment
 ingress:
   name: payment-ingress-prod
+  className: nginx-prod
 hpa:
   minReplicas: 2
   maxReplicas: 4
