@@ -34,6 +34,7 @@ externalSecret:
   vaultPath: prod/catalog
 ingress:
   name: catalogue-ingress-prod
+  className: nginx-prod
 rollout:
   enabled: true
   strategy:
