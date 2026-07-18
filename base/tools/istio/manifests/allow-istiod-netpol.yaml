@@ -15,5 +15,16 @@ spec:
           protocol: TCP
         - port: 15017
           protocol: TCP
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: istio-system
+      ports:
+        - port: 15012
+          protocol: TCP
+        - port: 15017
+          protocol: TCP
   policyTypes:
     - Ingress
+    - Egress
