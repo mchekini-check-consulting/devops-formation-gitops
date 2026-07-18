@@ -32,6 +32,7 @@ allowedRegistries:
   - "docker.io/bitnamilegacy/*"
   - "docker.io/istio/*"
   - "registry.istio.io/*"
+  - "docker.io/pgedge/*"
 
 # Labels obligatoires
 requiredLabels:
