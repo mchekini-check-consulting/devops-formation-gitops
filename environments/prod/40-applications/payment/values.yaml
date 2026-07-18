@@ -19,6 +19,9 @@ secret:
 externalSecret:
   enabled: true
   vaultPath: prod/payment
+netpolicies:
+  extraIngressNamespaces:
+    - ingress-nginx-prod
 ingress:
   name: payment-ingress-prod
   className: nginx-prod

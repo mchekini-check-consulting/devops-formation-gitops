@@ -33,6 +33,9 @@ secret:
 externalSecret:
   enabled: true
   vaultPath: prod/catalog
+netpolicies:
+  extraIngressNamespaces:
+    - ingress-nginx-prod
 ingress:
   name: catalogue-ingress-prod
   className: nginx-prod
