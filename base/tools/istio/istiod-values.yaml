@@ -5,8 +5,8 @@ pilot:
       memory: 256Mi
     limits:
       memory: 512Mi
+  env:
+    PILOT_ENABLE_AMBIENT: "true"
 
 meshConfig:
-  defaultConfig:
-    holdApplicationUntilProxyStarts: true
   accessLogFile: /dev/stdout

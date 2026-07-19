@@ -4,4 +4,4 @@ metadata:
   name: prod
   labels:
     env: prod
-    istio-injection: enabled
+    istio.io/dataplane-mode: ambient
