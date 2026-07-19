@@ -5,4 +5,4 @@ metadata:
   namespace: prod
 spec:
   mtls:
-    mode: PERMISSIVE
+    mode: STRICT
