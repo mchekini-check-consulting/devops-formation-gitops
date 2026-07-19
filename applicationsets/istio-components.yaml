@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: istio-components
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: istio-base
+            chart: base
+            syncWave: "0"
+          - name: istio-cni
+            chart: cni
+            syncWave: "0"
+          - name: istio-ztunnel
+            chart: ztunnel
+            syncWave: "1"
+  template:
+    metadata:
+      name: "{{name}}"
+      annotations:
+        argocd.argoproj.io/sync-wave: "{{syncWave}}"
+    spec:
+      project: default
+      sources:
+        - repoURL: https://istio-release.storage.googleapis.com/charts
+          chart: "{{chart}}"
+          targetRevision: "~1"
+          helm:
+            values: |
+              profile: ambient
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: istio-system
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+      ignoreDifferences:
+        - group: admissionregistration.k8s.io
+          kind: ValidatingWebhookConfiguration
+          name: istiod-default-validator
+          jsonPointers:
+            - /webhooks
