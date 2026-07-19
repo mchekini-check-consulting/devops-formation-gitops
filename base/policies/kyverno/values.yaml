@@ -33,6 +33,7 @@ allowedRegistries:
   - "docker.io/istio/*"
   - "registry.istio.io/*"
   - "docker.io/pgedge/*"
+  - "docker.io/alpine/*"
 
 # Labels obligatoires
 requiredLabels:
