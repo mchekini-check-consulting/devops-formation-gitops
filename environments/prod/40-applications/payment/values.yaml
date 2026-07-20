@@ -4,7 +4,7 @@ namespace: prod
 replicaCount: 2
 resources:
   requests:
-    cpu: 250m
+    cpu: 100m
     memory: 411Mi
   limits:
     cpu: "1"
