@@ -1,0 +1,10 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: keycloak
+  namespace: prod
+  annotations:
+    kubernetes.io/ingress.class: kong
+username: keycloak
+credentials:
+  - kong-jwt-keycloak

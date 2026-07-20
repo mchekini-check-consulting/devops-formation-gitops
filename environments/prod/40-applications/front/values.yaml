@@ -26,23 +26,9 @@ configmap:
   KEYCLOAK_CLIENT_ID: "frontend-app"
 networkPolicy:
   extraIngressNamespaces:
-    - ingress-nginx-prod
+    - kong
 rollout:
   enabled: true
-ingress:
-  enabled: true
-  name: front-ingress-prod
-  className: nginx-prod
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
-  tls:
-    - secretName: front-prod-tls
-  routes:
-    - path: /
-      pathType: Prefix
-      service:
-        name: front
-        port: 80
 hpa:
   minReplicas: 2
   maxReplicas: 4

@@ -1,0 +1,13 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: jwt-auth
+  namespace: prod
+plugin: jwt
+config:
+  uri_param_names:
+    - jwt
+  header_names:
+    - Authorization
+  claims_to_verify:
+    - exp
