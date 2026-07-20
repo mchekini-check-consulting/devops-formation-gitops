@@ -22,8 +22,6 @@ gateway:
       memory: 512Mi
   proxy:
     type: LoadBalancer
-    annotations:
-      service.beta.kubernetes.io/azure-load-balancer-resource-group: "rg-formation-ecom-aks"
-      service.beta.kubernetes.io/azure-load-balancer-ipv4: "20.19.237.193"
+    annotations: {}
     tls:
       enabled: true
