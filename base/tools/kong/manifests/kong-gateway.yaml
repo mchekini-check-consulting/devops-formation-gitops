@@ -4,7 +4,7 @@ metadata:
   name: kong-gateway
   namespace: kong
   annotations:
-    konghq.com/gateway-unmanaged: "true"
+    konghq.com/gateway-unmanaged: "kong/kong-gateway-proxy"
 spec:
   gatewayClassName: kong
   listeners:
