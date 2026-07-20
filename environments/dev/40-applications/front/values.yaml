@@ -1,5 +1,5 @@
 image:
-  tag: 35fd3c9-main-202607181145 # sha-slugbranch-timestamp
+  tag: 28d633c-main-202607202150 # sha-slugbranch-timestamp
 namespace: dev
 replicaCount: 2
 resources:
