@@ -21,10 +21,10 @@ ingress:
 
 resources:
   limits:
-    cpu: 800m
+    cpu: 400m
     memory: 2560Mi
   requests:
-    cpu: 400m
+    cpu: 200m
     memory: 1536Mi
 
 # JVM heaps optimisés pour 4 projets en formation
