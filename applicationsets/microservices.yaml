@@ -50,6 +50,10 @@ spec:
           kind: Deployment
           jsonPointers:
             - /spec/replicas
+        - group: argoproj.io
+          kind: Rollout
+          jsonPointers:
+            - /spec/replicas
         - kind: Pod
           jsonPointers:
             - /metadata/annotations/deploy.kubernetes.io~1date

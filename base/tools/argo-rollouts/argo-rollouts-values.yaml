@@ -10,6 +10,10 @@ controller:
 installCRDs: true
 clusterInstall: true
 
+providerRBAC:
+  providers:
+    gatewayAPI: true
+
 dashboard:
   enabled: true
   extraArgs:
