@@ -13,13 +13,6 @@ spec:
   rules:
     - http:
         paths:
-          - path: /api/products
-            pathType: Prefix
-            backend:
-              service:
-                name: catalogue
-                port:
-                  number: 4000
           - path: /api/orders
             pathType: Prefix
             backend:

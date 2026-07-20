@@ -36,7 +36,22 @@ netpolicies:
   extraIngressNamespaces:
     - kong
 rollout:
-  enabled: false
+  enabled: true
+  strategy:
+    canary:
+      stableService: catalogue
+      canaryService: catalogue-canary
+      trafficRouting:
+        gatewayAPI:
+          httpRoute: catalogue-httproute
+          namespace: prod
+      steps:
+        - setWeight: 20
+        - pause: { duration: 30s }
+        - setWeight: 50
+        - pause: { duration: 30s }
+        - setWeight: 80
+        - pause: { duration: 30s }
 hpa:
   minReplicas: 2
   maxReplicas: 4

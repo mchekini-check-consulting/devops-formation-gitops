@@ -1,0 +1,16 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: kong-gateway
+  namespace: kong
+  annotations:
+    konghq.com/gateway-unmanaged: "true"
+spec:
+  gatewayClassName: kong
+  listeners:
+    - name: proxy
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: All

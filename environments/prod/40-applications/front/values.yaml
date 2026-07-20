@@ -29,6 +29,12 @@ networkPolicy:
     - kong
 rollout:
   enabled: true
+  strategy:
+    blueGreen:
+      activeService: front
+      previewService: front-preview
+      autoPromotionEnabled: false
+      scaleDownDelaySeconds: 600
 hpa:
   minReplicas: 2
   maxReplicas: 4
