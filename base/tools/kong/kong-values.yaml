@@ -1,6 +1,8 @@
 controller:
   ingressController:
     installCRDs: false
+    env:
+      feature_gates: GatewayAlpha=true
   resources:
     requests:
       cpu: 50m
