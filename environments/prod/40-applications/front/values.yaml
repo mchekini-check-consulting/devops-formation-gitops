@@ -15,11 +15,11 @@ certificate:
   secretName: front-prod-tls
   issuer: selfsigned-issuer
   ipAddresses:
-    - "20.19.237.193"
+    - "172.189.165.0"
 configmap:
-  CATALOG: "https://20.19.237.193/api/products"
-  ORDERS: "https://20.19.237.193/api/orders"
-  PAYMENT: "https://20.19.237.193/api/payments"
+  CATALOG: "https://172.189.165.0/api/products"
+  ORDERS: "https://172.189.165.0/api/orders"
+  PAYMENT: "https://172.189.165.0/api/payments"
   AUTH_ENABLED: "true"
   KEYCLOAK_URL: "https://51.11.203.15"
   KEYCLOAK_REALM: "formation"
