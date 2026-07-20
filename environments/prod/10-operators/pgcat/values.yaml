@@ -1,1 +1,9 @@
 namespace: prod
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 64Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
