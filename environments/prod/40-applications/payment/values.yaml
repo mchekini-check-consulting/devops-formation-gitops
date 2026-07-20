@@ -5,14 +5,15 @@ replicaCount: 2
 resources:
   requests:
     cpu: 100m
-    memory: 411Mi
+    memory: 350Mi
   limits:
-    cpu: "1"
-    memory: 1520Mi
+    cpu: 500m
+    memory: 512Mi
 configmap:
   SPRING_PROFILES_ACTIVE: "prod"
   SPRING_DATASOURCE_URL: "jdbc:postgresql://pgcat.prod.svc.cluster.local:5432/payment?sslmode=disable"
   LOG_LEVEL: "WARN"
+  JAVA_TOOL_OPTIONS: "-Xmx256m -Xms128m"
 secret:
   enabled: false
 
