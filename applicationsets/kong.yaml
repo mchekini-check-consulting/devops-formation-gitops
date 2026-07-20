@@ -1,25 +1,28 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ingress-nginx-prod
+  name: kong
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   project: default
   sources:
-    - repoURL: https://kubernetes.github.io/ingress-nginx
-      chart: ingress-nginx
-      targetRevision: "*"
+    - repoURL: https://charts.konghq.com
+      chart: ingress
+      targetRevision: "~0"
       helm:
         valueFiles:
-          - $values/base/tools/ingress-nginx/ingress-nginx-prod-values.yaml
+          - $values/base/tools/kong/kong-values.yaml
+    - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
+      targetRevision: main
+      path: base/tools/kong/manifests
     - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
       targetRevision: main
       ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: ingress-nginx-prod
+    namespace: kong
   syncPolicy:
     automated:
       prune: true

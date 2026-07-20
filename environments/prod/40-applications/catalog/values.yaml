@@ -34,17 +34,9 @@ externalSecret:
   vaultPath: prod/catalog
 netpolicies:
   extraIngressNamespaces:
-    - ingress-nginx-prod
-ingress:
-  name: catalogue-ingress-prod
-  className: nginx-prod
+    - kong
 rollout:
-  enabled: true
-  strategy:
-    canary:
-      trafficRouting:
-        nginx:
-          stableIngress: catalogue-ingress-prod
+  enabled: false
 hpa:
   minReplicas: 2
   maxReplicas: 4

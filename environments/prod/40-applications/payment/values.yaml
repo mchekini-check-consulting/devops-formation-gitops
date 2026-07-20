@@ -21,10 +21,7 @@ externalSecret:
   vaultPath: prod/payment
 netpolicies:
   extraIngressNamespaces:
-    - ingress-nginx-prod
-ingress:
-  name: payment-ingress-prod
-  className: nginx-prod
+    - kong
 hpa:
   minReplicas: 2
   maxReplicas: 4

@@ -37,10 +37,7 @@ externalSecret:
   vaultPath: prod/order
 netpolicies:
   extraIngressNamespaces:
-    - ingress-nginx-prod
-ingress:
-  name: order-ingress-prod
-  className: nginx-prod
+    - kong
 hpa:
   minReplicas: 2
   maxReplicas: 6

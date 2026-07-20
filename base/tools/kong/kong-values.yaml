@@ -1,0 +1,29 @@
+controller:
+  ingressController:
+    installCRDs: false
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+gateway:
+  env:
+    database: "off"
+    nginx_worker_processes: "2"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  proxy:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-resource-group: "rg-formation-ecom-aks"
+      service.beta.kubernetes.io/azure-load-balancer-ipv4: "20.19.237.193"
+    tls:
+      enabled: true
