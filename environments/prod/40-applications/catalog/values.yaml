@@ -1,5 +1,5 @@
 image:
-  tag: c0b9eb0-main-20260720213706 # sha-slugbranch-timestamp
+  tag: 8b72239-main-20260720221012 # sha-slugbranch-timestamp
 namespace: prod
 replicaCount: 2
 resources:
@@ -47,11 +47,11 @@ rollout:
           namespace: prod
       steps:
         - setWeight: 20
-        - pause: { duration: 30s }
+        - pause: {duration: 30s}
         - setWeight: 50
-        - pause: { duration: 30s }
+        - pause: {duration: 30s}
         - setWeight: 80
-        - pause: { duration: 30s }
+        - pause: {duration: 30s}
 hpa:
   minReplicas: 2
   maxReplicas: 4
