@@ -21,3 +21,7 @@ spec:
           port: 4000
           kind: Service
           weight: 100
+        - name: catalogue-canary
+          port: 4000
+          kind: Service
+          weight: 0
