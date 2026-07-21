@@ -19,6 +19,8 @@ secret:
 externalSecret:
   enabled: true
   vaultPath: prod/payment
+ingress:
+  enabled: false
 netpolicies:
   extraIngressNamespaces:
     - kong
