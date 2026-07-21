@@ -4,13 +4,21 @@ metadata:
   name: argo-rollouts-gateway-api
 rules:
   - apiGroups:
+      - ""
+    resources:
+      - services
+    verbs:
+      - get
+  - apiGroups:
       - gateway.networking.k8s.io
     resources:
       - httproutes
+      - grpcroutes
+      - tcproutes
+      - tlsroutes
     verbs:
       - get
       - list
-      - watch
       - update
       - patch
 ---

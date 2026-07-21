@@ -44,9 +44,10 @@ rollout:
       stableService: catalogue
       canaryService: catalogue-canary
       trafficRouting:
-        gatewayAPI:
-          httpRoute: catalogue-httproute
-          namespace: prod
+        plugins:
+          argoproj-labs/gatewayAPI:
+            httpRoute: catalogue-httproute
+            namespace: prod
       steps:
         - setWeight: 20
         - pause: {duration: 30s}
