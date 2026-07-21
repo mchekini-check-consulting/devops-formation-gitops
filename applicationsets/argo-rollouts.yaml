@@ -15,7 +15,13 @@ spec:
       helm:
         valueFiles:
           - $values/base/tools/argo-rollouts/argo-rollouts-values.yaml
-    # Source 2 : ref pour $values
+    # Source 2 : manifests supplémentaires (RBAC Gateway API)
+    - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
+      targetRevision: main
+      path: base/tools/argo-rollouts/manifests
+      directory:
+        recurse: true
+    # Source 3 : ref pour $values
     - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
       targetRevision: main
       ref: values
