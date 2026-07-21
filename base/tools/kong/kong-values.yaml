@@ -15,6 +15,7 @@ gateway:
   env:
     database: "off"
     nginx_worker_processes: "2"
+    untrusted_lua: "on"
   resources:
     requests:
       cpu: 100m
