@@ -1,0 +1,25 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: extract-jwt-sub
+  namespace: prod
+plugin: pre-function
+config:
+  access:
+    - |
+      local jwt = kong.request.get_header("Authorization")
+      if jwt then
+        jwt = jwt:gsub("Bearer ", "")
+        local parts = {}
+        for part in jwt:gmatch("[^%.]+") do table.insert(parts, part) end
+        if #parts == 3 then
+          local payload = ngx.decode_base64(parts[2])
+          if payload then
+            local cjson = require("cjson.safe")
+            local data = cjson.decode(payload)
+            if data and data.sub then
+              kong.service.request.set_header("X-User-Sub", data.sub)
+            end
+          end
+        end
+      end
