@@ -1,0 +1,305 @@
+# ─── Prometheus ────────────────────────────────────────────────────────────────
+prometheus:
+  prometheusSpec:
+    retention: 30d
+    resources:
+      requests:
+        cpu: 250m
+        memory: 1Gi
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: managed-premium
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
+    # Scraper les ServiceMonitors de tous les namespaces
+    serviceMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+
+# ─── Alertmanager ──────────────────────────────────────────────────────────────
+alertmanager:
+  alertmanagerSpec:
+    secrets:
+      - alertmanager-smtp
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: managed-premium
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+  config:
+    global:
+      resolve_timeout: 5m
+    route:
+      receiver: "default"
+      group_by: ["alertname", "namespace", "service"]
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 4h
+      routes:
+        - receiver: "critical-email"
+          match:
+            severity: critical
+          repeat_interval: 1h
+        - receiver: "warning-slack"
+          match:
+            severity: warning
+          repeat_interval: 4h
+    inhibit_rules:
+      - source_matchers:
+          - severity = critical
+        target_matchers:
+          - severity = warning
+        equal: ["alertname", "namespace"]
+    receivers:
+      - name: "default"
+        webhook_configs: []
+      - name: "critical-email"
+        email_configs:
+          - to: "jubatouam61@gmail.com, aguelid_aksel@protonmail.com"
+            from: "jubatouam61@gmail.com"
+            smarthost: "smtp.gmail.com:587"
+            auth_username: "jubatouam61@gmail.com"
+            auth_identity: "jubatouam61@gmail.com"
+            auth_password_file: /etc/alertmanager/secrets/alertmanager-smtp/smtp_password
+            require_tls: true
+      - name: "warning-slack"
+        slack_configs:
+          - api_url: ""
+            channel: "#monitoring-alerts"
+            title: '[{{ .Status | toUpper }}] {{ .GroupLabels.alertname }}'
+            text: >-
+              {{ range .Alerts }}
+              *Alert:* {{ .Labels.alertname }}
+              *Namespace:* {{ .Labels.namespace }}
+              *Service:* {{ .Labels.service }}
+              *Severity:* {{ .Labels.severity }}
+              *Description:* {{ .Annotations.description }}
+              {{ end }}
+    templates:
+      - '/etc/alertmanager/config/*.tmpl'
+
+# ─── Grafana ───────────────────────────────────────────────────────────────────
+grafana:
+  enabled: true
+  adminPassword: "admin"
+  grafana.ini:
+    server:
+      root_url: "%(protocol)s://%(domain)s/grafana"
+      serve_from_sub_path: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  persistence:
+    enabled: true
+    storageClassName: managed-premium
+    size: 5Gi
+
+# ─── Node Exporter ─────────────────────────────────────────────────────────────
+nodeExporter:
+  enabled: true
+
+# ─── Kube State Metrics ────────────────────────────────────────────────────────
+kubeStateMetrics:
+  enabled: true
+
+# ─── ServiceMonitors additionnels ──────────────────────────────────────────────
+additionalServiceMonitors:
+  # ── Catalog (Express.js) ──
+  - name: catalog-monitor
+    selector:
+      matchLabels:
+        app: catalogue
+    namespaceSelector:
+      matchNames:
+        - prod
+    endpoints:
+      - port: http
+        path: /actuator/prometheus
+        interval: 30s
+
+  # ── Order (Django) ──
+  - name: order-monitor
+    selector:
+      matchLabels:
+        app: order
+    namespaceSelector:
+      matchNames:
+        - prod
+    endpoints:
+      - port: http
+        path: /actuator/prometheus
+        interval: 30s
+
+  # ── Payment (Spring Boot) ──
+  - name: payment-monitor
+    selector:
+      matchLabels:
+        app: payment
+    namespaceSelector:
+      matchNames:
+        - prod
+    endpoints:
+      - port: http
+        path: /actuator/prometheus
+        interval: 30s
+
+  # ── Kong Gateway (métriques + cache hit ratio) ──
+  - name: kong-monitor
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: gateway
+        app.kubernetes.io/instance: kong
+    namespaceSelector:
+      matchNames:
+        - kong
+    endpoints:
+      - port: status
+        path: /metrics
+        interval: 30s
+
+  # ── PgCat (connection pooler) ──
+  - name: pgcat-monitor
+    selector:
+      matchLabels:
+        app: pgcat
+    namespaceSelector:
+      matchNames:
+        - prod
+    endpoints:
+      - port: metrics
+        path: /metrics
+        interval: 30s
+
+# ─── PrometheusRules ───────────────────────────────────────────────────────────
+additionalPrometheusRules:
+  - name: application-alerts
+    groups:
+      - name: microservices.rules
+        rules:
+          # ── Taux d'erreur HTTP 5xx > 5% sur 5 min ──
+          - alert: HighErrorRate
+            expr: |
+              (
+                sum(rate(http_request_duration_seconds_count{status_code=~"5.."}[5m])) by (namespace, service)
+                /
+                sum(rate(http_request_duration_seconds_count[5m])) by (namespace, service)
+              ) > 0.05
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "High error rate on {{ $labels.service }}"
+              description: "Service {{ $labels.service }} in {{ $labels.namespace }} has > 5% error rate (current: {{ $value | humanizePercentage }})"
+
+          # ── Latence P95 > 1s ──
+          - alert: HighLatencyP95
+            expr: |
+              histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, namespace, service)) > 1
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High P95 latency on {{ $labels.service }}"
+              description: "Service {{ $labels.service }} P95 latency > 1s (current: {{ $value | humanizeDuration }})"
+
+      - name: kubernetes.rules
+        rules:
+          # ── Pod en CrashLoopBackOff > 5 min ──
+          - alert: PodCrashLoopBackOff
+            expr: |
+              increase(kube_pod_container_status_restarts_total[1h]) > 5
+              and
+              kube_pod_container_status_waiting_reason{reason="CrashLoopBackOff"} == 1
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Pod {{ $labels.pod }} is CrashLoopBackOff"
+              description: "Pod {{ $labels.pod }} in {{ $labels.namespace }} is restarting frequently"
+
+          # ── PVC > 85% utilisé ──
+          - alert: PVCAlmostFull
+            expr: |
+              (
+                kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes
+              ) > 0.85
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              summary: "PVC {{ $labels.persistentvolumeclaim }} almost full"
+              description: "PVC {{ $labels.persistentvolumeclaim }} in {{ $labels.namespace }} is {{ $value | humanizePercentage }} full"
+
+          # ── Certificat TLS expire dans < 14 jours ──
+          - alert: TLSCertExpiringSoon
+            expr: |
+              (certmanager_certificate_expiration_timestamp_seconds - time()) < 14 * 24 * 3600
+            for: 1h
+            labels:
+              severity: warning
+            annotations:
+              summary: "TLS certificate expiring soon"
+              description: "Certificate {{ $labels.name }} in {{ $labels.namespace }} expires in {{ $value | humanizeDuration }}"
+
+      - name: database.rules
+        rules:
+          # ── Connexions PostgreSQL > 80% du max ──
+          - alert: PostgresConnectionsHigh
+            expr: |
+              sum(pg_stat_activity_count) by (server)
+              /
+              sum(pg_settings_max_connections) by (server)
+              > 0.8
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "PostgreSQL connections high"
+              description: "PostgreSQL connections at {{ $value | humanizePercentage }} of max"
+
+          # ── Lag de réplication PostgreSQL > 30s ──
+          - alert: PostgresReplicationLag
+            expr: |
+              pg_replication_lag > 30
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "PostgreSQL replication lag"
+              description: "Replication lag is {{ $value }}s (threshold: 30s)"
+
+      - name: kong.rules
+        rules:
+          # ── Cache hit ratio Kong < 50% ──
+          - alert: KongCacheHitRatioLow
+            expr: |
+              (
+                sum(rate(kong_proxy_cache_hits_total[5m]))
+                /
+                (sum(rate(kong_proxy_cache_hits_total[5m])) + sum(rate(kong_proxy_cache_misses_total[5m])))
+              ) < 0.5
+            for: 15m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Kong cache hit ratio is low"
+              description: "Kong proxy cache hit ratio is {{ $value | humanizePercentage }} (threshold: 50%)"

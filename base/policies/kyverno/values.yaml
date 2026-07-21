@@ -20,6 +20,7 @@ excludeNamespaces:
   - keycloak
   - istio-system
   - kong
+  - monitoring
 
 # Registries autorises
 allowedRegistries:
@@ -35,6 +36,8 @@ allowedRegistries:
   - "docker.io/pgedge/*"
   - "docker.io/alpine/*"
   - "docker.io/kong/*"
+  - "docker.io/grafana/*"
+  - "docker.io/jimmidyson/*"
 
 # Labels obligatoires
 requiredLabels:
