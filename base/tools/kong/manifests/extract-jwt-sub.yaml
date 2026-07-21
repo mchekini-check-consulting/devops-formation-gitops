@@ -7,22 +7,29 @@ plugin: pre-function
 config:
   access:
     - |
-      local jwt = kong.request.get_header("Authorization")
-      if jwt then
-        jwt = jwt:gsub("Bearer ", "")
-        local parts = {}
-        for part in jwt:gmatch("[^%.]+") do table.insert(parts, part) end
-        if #parts == 3 then
-          local b64 = parts[2]
-          b64 = b64:gsub("-", "+"):gsub("_", "/")
-          local pad = 4 - (#b64 % 4)
-          if pad < 4 then b64 = b64 .. string.rep("=", pad) end
-          local payload = ngx.decode_base64(b64)
-          if payload then
-            local cjson = require("cjson.safe")
-            local data = cjson.decode(payload)
-            if data and data.sub then
-              kong.service.request.set_header("X-User-Sub", data.sub)
+      local auth = kong.request.get_header("Authorization")
+      if auth then
+        local token = auth:sub(8)
+        local dot1 = token:find("%.")
+        if dot1 then
+          local dot2 = token:find("%.", dot1 + 1)
+          if dot2 then
+            local b64 = token:sub(dot1 + 1, dot2 - 1)
+            b64 = b64:gsub("-", "+"):gsub("_", "/")
+            local rem = #b64 % 4
+            if rem == 2 then b64 = b64 .. "=="
+            elseif rem == 3 then b64 = b64 .. "="
+            end
+            local payload = ngx.decode_base64(b64)
+            if payload then
+              local s, e = payload:find('"sub"%s*:%s*"')
+              if s then
+                local val_start = e + 1
+                local val_end = payload:find('"', val_start)
+                if val_end then
+                  kong.service.request.set_header("X-User-Sub", payload:sub(val_start, val_end - 1))
+                end
+              end
             end
           end
         end
