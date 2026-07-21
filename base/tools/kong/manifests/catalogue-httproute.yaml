@@ -4,7 +4,7 @@ metadata:
   name: catalogue-httproute
   namespace: prod
   annotations:
-    konghq.com/plugins: jwt-auth,proxy-cache-products
+    konghq.com/plugins: jwt-auth,extract-jwt-sub,rate-limit-catalog,proxy-cache-products
     konghq.com/strip-path: "false"
 spec:
   parentRefs:

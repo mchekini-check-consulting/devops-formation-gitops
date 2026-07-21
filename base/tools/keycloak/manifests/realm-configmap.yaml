@@ -10,6 +10,12 @@ data:
       "registrationAllowed": true,
       "verifyEmail": false,
       "loginWithEmailAllowed": true,
+      "bruteForceProtected": true,
+      "permanentLockout": false,
+      "failureFactor": 5,
+      "waitIncrementSeconds": 60,
+      "maxFailureWaitSeconds": 900,
+      "maxDeltaTimeSeconds": 900,
       "roles": {
         "realm": [
           {
