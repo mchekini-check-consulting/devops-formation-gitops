@@ -13,7 +13,11 @@ config:
         local parts = {}
         for part in jwt:gmatch("[^%.]+") do table.insert(parts, part) end
         if #parts == 3 then
-          local payload = ngx.decode_base64(parts[2])
+          local b64 = parts[2]
+          b64 = b64:gsub("-", "+"):gsub("_", "/")
+          local pad = 4 - (#b64 % 4)
+          if pad < 4 then b64 = b64 .. string.rep("=", pad) end
+          local payload = ngx.decode_base64(b64)
           if payload then
             local cjson = require("cjson.safe")
             local data = cjson.decode(payload)
