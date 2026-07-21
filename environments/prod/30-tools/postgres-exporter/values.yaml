@@ -1,0 +1,25 @@
+# ─── Postgres Exporter ─────────────────────────────────────────────────────────
+config:
+  datasource:
+    host: postgres-primary.prod.svc.cluster.local
+    port: "5432"
+    user: postgres
+    password: ""
+    database: postgres
+    sslmode: disable
+  datasourceSecret:
+    name: ""
+    key: ""
+
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
+  interval: 30s
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
