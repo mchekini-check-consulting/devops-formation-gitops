@@ -35,6 +35,8 @@ secret:
 externalSecret:
   enabled: true
   vaultPath: prod/order
+ingress:
+  enabled: false
 netpolicies:
   extraIngressNamespaces:
     - kong
