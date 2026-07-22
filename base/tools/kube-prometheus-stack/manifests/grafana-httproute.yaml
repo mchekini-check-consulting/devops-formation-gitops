@@ -4,7 +4,7 @@ metadata:
   name: grafana-httproute
   namespace: monitoring
   annotations:
-    konghq.com/strip-path: "true"
+    konghq.com/strip-path: "false"
 spec:
   parentRefs:
     - name: kong-gateway
