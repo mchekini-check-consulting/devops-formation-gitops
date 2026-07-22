@@ -20,6 +20,68 @@ prometheus:
     # Scraper les ServiceMonitors de tous les namespaces
     serviceMonitorSelectorNilUsesHelmValues: false
     ruleSelectorNilUsesHelmValues: false
+  additionalServiceMonitors:
+    # ── Catalog (Express.js) ──
+    - name: catalog-monitor
+      selector:
+        matchLabels:
+          app: catalogue
+      namespaceSelector:
+        matchNames:
+          - prod
+      endpoints:
+        - port: http
+          path: /actuator/prometheus
+          interval: 30s
+    # ── Order (Django) ──
+    - name: order-monitor
+      selector:
+        matchLabels:
+          app: order
+      namespaceSelector:
+        matchNames:
+          - prod
+      endpoints:
+        - port: http
+          path: /actuator/prometheus
+          interval: 30s
+    # ── Payment (Spring Boot) ──
+    - name: payment-monitor
+      selector:
+        matchLabels:
+          app: payment
+      namespaceSelector:
+        matchNames:
+          - prod
+      endpoints:
+        - port: http
+          path: /actuator/prometheus
+          interval: 30s
+    # ── Kong Gateway (métriques + cache hit ratio) ──
+    - name: kong-monitor
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: gateway
+          app.kubernetes.io/instance: kong
+      namespaceSelector:
+        matchNames:
+          - kong
+      endpoints:
+        - port: status
+          path: /metrics
+          interval: 30s
+    # ── PgCat (connection pooler) ──
+    - name: pgcat-monitor
+      selector:
+        matchLabels:
+          app: pgcat
+      namespaceSelector:
+        matchNames:
+          - prod
+      endpoints:
+        - port: metrics
+          path: /metrics
+          interval: 30s
 
 # ─── Alertmanager ──────────────────────────────────────────────────────────────
 alertmanager:
@@ -108,6 +170,38 @@ grafana:
     limits:
       cpu: 500m
       memory: 512Mi
+  sidecar:
+    dashboards:
+      enabled: true
+  additionalDataSources:
+    - name: Prometheus
+      type: prometheus
+      url: http://kube-prometheus-stack-prometheus:9090
+      isDefault: true
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: custom
+          orgId: 1
+          folder: Custom
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/custom
+  dashboards:
+    custom:
+      # PostgreSQL — connexions, réplication, locks, cache hit ratio
+      postgresql-overview:
+        gnetId: 9628
+        revision: 7
+        datasource: Prometheus
+      # Kong — requêtes, latence, cache hit/miss
+      kong-overview:
+        gnetId: 7424
+        revision: 7
+        datasource: Prometheus
   persistence:
     enabled: true
     storageClassName: managed-premium
@@ -121,77 +215,9 @@ nodeExporter:
 kubeStateMetrics:
   enabled: true
 
-# ─── ServiceMonitors additionnels ──────────────────────────────────────────────
-additionalServiceMonitors:
-  # ── Catalog (Express.js) ──
-  - name: catalog-monitor
-    selector:
-      matchLabels:
-        app: catalogue
-    namespaceSelector:
-      matchNames:
-        - prod
-    endpoints:
-      - port: http
-        path: /actuator/prometheus
-        interval: 30s
-
-  # ── Order (Django) ──
-  - name: order-monitor
-    selector:
-      matchLabels:
-        app: order
-    namespaceSelector:
-      matchNames:
-        - prod
-    endpoints:
-      - port: http
-        path: /actuator/prometheus
-        interval: 30s
-
-  # ── Payment (Spring Boot) ──
-  - name: payment-monitor
-    selector:
-      matchLabels:
-        app: payment
-    namespaceSelector:
-      matchNames:
-        - prod
-    endpoints:
-      - port: http
-        path: /actuator/prometheus
-        interval: 30s
-
-  # ── Kong Gateway (métriques + cache hit ratio) ──
-  - name: kong-monitor
-    selector:
-      matchLabels:
-        app.kubernetes.io/name: gateway
-        app.kubernetes.io/instance: kong
-    namespaceSelector:
-      matchNames:
-        - kong
-    endpoints:
-      - port: status
-        path: /metrics
-        interval: 30s
-
-  # ── PgCat (connection pooler) ──
-  - name: pgcat-monitor
-    selector:
-      matchLabels:
-        app: pgcat
-    namespaceSelector:
-      matchNames:
-        - prod
-    endpoints:
-      - port: metrics
-        path: /metrics
-        interval: 30s
-
 # ─── PrometheusRules ───────────────────────────────────────────────────────────
-additionalPrometheusRules:
-  - name: application-alerts
+additionalPrometheusRulesMap:
+  application-alerts:
     groups:
       - name: microservices.rules
         rules:
