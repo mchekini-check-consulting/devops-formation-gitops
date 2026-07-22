@@ -3,13 +3,12 @@ config:
   datasource:
     host: postgres-primary.prod.svc.cluster.local
     port: "5432"
-    user: postgres
-    password: ""
+    user: formation
+    passwordSecret:
+      name: postgres-exporter-secret
+      key: password
     database: postgres
     sslmode: disable
-  datasourceSecret:
-    name: ""
-    key: ""
 
 serviceMonitor:
   enabled: true

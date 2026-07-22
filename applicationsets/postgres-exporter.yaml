@@ -16,6 +16,9 @@ spec:
           - $values/environments/prod/30-tools/postgres-exporter/values.yaml
     - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
       targetRevision: main
+      path: base/tools/postgres-exporter/manifests
+    - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
+      targetRevision: main
       ref: values
   destination:
     server: https://kubernetes.default.svc
