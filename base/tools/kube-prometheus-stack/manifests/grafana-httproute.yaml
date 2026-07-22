@@ -1,21 +1,19 @@
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: grafana-httproute
+  name: kong-grafana
   namespace: monitoring
   annotations:
     konghq.com/strip-path: "false"
 spec:
-  parentRefs:
-    - name: kong-gateway
-      namespace: kong
-      sectionName: proxy
+  ingressClassName: kong
   rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /grafana
-      backendRefs:
-        - name: kube-prometheus-stack-grafana
-          port: 80
-          kind: Service
+    - http:
+        paths:
+          - path: /grafana
+            pathType: Prefix
+            backend:
+              service:
+                name: kube-prometheus-stack-grafana
+                port:
+                  number: 80
