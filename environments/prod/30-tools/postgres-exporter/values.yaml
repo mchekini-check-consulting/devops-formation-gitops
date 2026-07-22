@@ -8,7 +8,7 @@ config:
       name: postgres-exporter-secret
       key: password
     database: postgres
-    sslmode: disable
+    sslmode: require
 
 serviceMonitor:
   enabled: true
