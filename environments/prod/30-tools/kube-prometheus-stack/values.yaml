@@ -161,8 +161,7 @@ grafana:
   adminPassword: "admin"
   grafana.ini:
     server:
-      root_url: "http://172.189.165.0/grafana"
-      serve_from_sub_path: true
+      root_url: "http://localhost"
   resources:
     requests:
       cpu: 100m
