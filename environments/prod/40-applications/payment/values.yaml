@@ -1,5 +1,5 @@
 image:
-  tag: 5af0ca8-main-20260724135505 # sha-slugbranch-timestamp
+  tag: bfc6ae8-main-20260724145946 # sha-slugbranch-timestamp
 namespace: prod
 replicaCount: 2
 resources:
