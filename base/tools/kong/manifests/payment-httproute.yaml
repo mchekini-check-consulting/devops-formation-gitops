@@ -4,7 +4,7 @@ metadata:
   name: payment-httproute
   namespace: prod
   annotations:
-    konghq.com/plugins: jwt-auth,extract-jwt-sub,rate-limit-payment
+    konghq.com/plugins: cors,jwt-auth,extract-jwt-sub,rate-limit-payment
     konghq.com/strip-path: "false"
 spec:
   parentRefs:
