@@ -1,0 +1,28 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: cors
+  namespace: prod
+plugin: cors
+config:
+  origins:
+    - "http://172.189.165.0"
+    - "https://172.189.165.0"
+  methods:
+    - GET
+    - POST
+    - PUT
+    - PATCH
+    - DELETE
+    - OPTIONS
+  headers:
+    - Authorization
+    - Content-Type
+    - X-Correlation-Id
+    - X-User-Id
+    - traceparent
+  exposed_headers:
+    - X-Kong-Response-Latency
+  credentials: true
+  max_age: 3600
+  preflight_continue: false
