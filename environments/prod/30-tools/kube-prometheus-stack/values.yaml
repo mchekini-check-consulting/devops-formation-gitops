@@ -57,17 +57,16 @@ prometheus:
         - port: http
           path: /actuator/prometheus
           interval: 30s
-    # ── Kong Controller (métriques + cache hit ratio) ──
+    # ── Kong Gateway (métriques + cache hit ratio) ──
     - name: kong-monitor
       selector:
         matchLabels:
-          app.kubernetes.io/name: controller
-          app.kubernetes.io/instance: kong
+          app: kong-gateway-metrics
       namespaceSelector:
         matchNames:
           - kong
       endpoints:
-        - port: status
+        - port: metrics
           path: /metrics
           interval: 30s
     # ── PgCat (connection pooler) ──
