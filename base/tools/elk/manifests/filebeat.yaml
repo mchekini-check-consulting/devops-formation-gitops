@@ -12,16 +12,15 @@ spec:
     filebeat.inputs:
       - type: filestream
         id: prod-logs
+        prospector.scanner.check_interval: 10s
         paths:
           - /var/log/containers/catalogue-*_prod_*.log
           - /var/log/containers/order-*_prod_*.log
           - /var/log/containers/payment-*_prod_*.log
         parsers:
-          - container: ~
-          - ndjson:
-              keys_under_root: true
-              add_error_key: true
-              message_key: message
+          - container:
+              stream: stdout
+              format: cri
     processors:
       - add_kubernetes_metadata:
           host: ${NODE_NAME}
