@@ -27,6 +27,16 @@ spec:
               add_error_key: true
               message_key: message
     processors:
+      - rename:
+          fields:
+            - from: "service"
+              to: "service.name"
+            - from: "level"
+              to: "log.level"
+            - from: "env"
+              to: "service.environment"
+          ignore_missing: true
+          fail_on_error: false
       - add_kubernetes_metadata:
           host: ${NODE_NAME}
           matchers:
