@@ -35,6 +35,12 @@ spec:
               to: "log.level"
             - from: "env"
               to: "service.environment"
+            - from: "method"
+              to: "httpMethod"
+            - from: "statusCode"
+              to: "httpStatusCode"
+            - from: "url"
+              to: "httpPath"
           ignore_missing: true
           fail_on_error: false
       - add_kubernetes_metadata:
