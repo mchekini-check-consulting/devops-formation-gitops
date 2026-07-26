@@ -10,14 +10,18 @@ spec:
     name: elasticsearch
   config:
     filebeat.inputs:
-      - type: container
+      - type: filestream
+        id: prod-logs
         paths:
           - /var/log/containers/catalogue-*_prod_*.log
           - /var/log/containers/order-*_prod_*.log
           - /var/log/containers/payment-*_prod_*.log
-        json.keys_under_root: true
-        json.add_error_key: true
-        json.message_key: message
+        parsers:
+          - container: ~
+          - ndjson:
+              keys_under_root: true
+              add_error_key: true
+              message_key: message
     processors:
       - add_kubernetes_metadata:
           host: ${NODE_NAME}
