@@ -24,10 +24,6 @@ spec:
           matchers:
             - logs_path:
                 logs_path: /var/log/containers/
-    output.elasticsearch:
-      index: "filebeat-prod-%{+yyyy.MM.dd}"
-    setup.template.name: "filebeat-prod"
-    setup.template.pattern: "filebeat-prod-*"
     setup.ilm.enabled: false
   daemonSet:
     podTemplate:
