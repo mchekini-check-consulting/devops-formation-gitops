@@ -9,26 +9,13 @@ spec:
   elasticsearchRef:
     name: elasticsearch
   config:
-    filebeat.autodiscover:
-      providers:
-        - type: kubernetes
-          node: ${NODE_NAME}
-          hints.enabled: true
-          templates:
-            - condition:
-                and:
-                  - equals:
-                      kubernetes.namespace: prod
-                  - not:
-                      equals:
-                        kubernetes.container.name: front
-              config:
-                - type: container
-                  paths:
-                    - /var/log/containers/*-${data.kubernetes.container.id}.log
-                  json.keys_under_root: true
-                  json.add_error_key: true
-                  json.message_key: message
+    filebeat.inputs:
+      - type: container
+        paths:
+          - /var/log/containers/*_prod_*.log
+        json.keys_under_root: true
+        json.add_error_key: true
+        json.message_key: message
     processors:
       - add_kubernetes_metadata:
           host: ${NODE_NAME}
@@ -37,18 +24,13 @@ spec:
                 logs_path: /var/log/containers/
       - drop_event:
           when:
-            or:
-              - not:
-                  equals:
-                    kubernetes.namespace: prod
-              - equals:
-                  kubernetes.container.name: front
-    setup.ilm.enabled: true
-    setup.ilm.rollover_alias: filebeat-prod
-    setup.ilm.pattern: "{now/d}-000001"
-    setup.ilm.policy_name: filebeat-prod-policy
-    setup.ilm.overwrite: true
-    setup.ilm.policy_file: /etc/filebeat/ilm-policy.json
+            equals:
+              kubernetes.container.name: front
+    output.elasticsearch:
+      index: "filebeat-prod-%{+yyyy.MM.dd}"
+    setup.template.name: "filebeat-prod"
+    setup.template.pattern: "filebeat-prod-*"
+    setup.ilm.enabled: false
   daemonSet:
     podTemplate:
       spec:
@@ -76,9 +58,6 @@ spec:
                 mountPath: /var/log/pods
               - name: varlibdockercontainers
                 mountPath: /var/lib/docker/containers
-              - name: ilm-policy
-                mountPath: /etc/filebeat/ilm-policy.json
-                subPath: ilm-policy.json
             env:
               - name: NODE_NAME
                 valueFrom:
@@ -94,37 +73,6 @@ spec:
           - name: varlibdockercontainers
             hostPath:
               path: /var/lib/docker/containers
-          - name: ilm-policy
-            configMap:
-              name: filebeat-ilm-policy
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: filebeat-ilm-policy
-  namespace: logging
-data:
-  ilm-policy.json: |
-    {
-      "policy": {
-        "phases": {
-          "hot": {
-            "min_age": "0ms",
-            "actions": {
-              "rollover": {
-                "max_age": "7d"
-              }
-            }
-          },
-          "delete": {
-            "min_age": "30d",
-            "actions": {
-              "delete": {}
-            }
-          }
-        }
-      }
-    }
 ---
 apiVersion: v1
 kind: ServiceAccount
