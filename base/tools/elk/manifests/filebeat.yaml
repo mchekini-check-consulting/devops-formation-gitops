@@ -1,0 +1,162 @@
+apiVersion: beat.k8s.elastic.co/v1beta1
+kind: Beat
+metadata:
+  name: filebeat
+  namespace: logging
+spec:
+  type: filebeat
+  version: 8.17.0
+  elasticsearchRef:
+    name: elasticsearch
+  config:
+    filebeat.autodiscover:
+      providers:
+        - type: kubernetes
+          node: ${NODE_NAME}
+          hints.enabled: true
+          templates:
+            - condition:
+                and:
+                  - equals:
+                      kubernetes.namespace: prod
+                  - not:
+                      equals:
+                        kubernetes.container.name: front
+              config:
+                - type: container
+                  paths:
+                    - /var/log/containers/*-${data.kubernetes.container.id}.log
+                  json.keys_under_root: true
+                  json.add_error_key: true
+                  json.message_key: message
+    processors:
+      - add_kubernetes_metadata:
+          host: ${NODE_NAME}
+          matchers:
+            - logs_path:
+                logs_path: /var/log/containers/
+      - drop_event:
+          when:
+            or:
+              - not:
+                  equals:
+                    kubernetes.namespace: prod
+              - equals:
+                  kubernetes.container.name: front
+    setup.ilm.enabled: true
+    setup.ilm.rollover_alias: filebeat-prod
+    setup.ilm.pattern: "{now/d}-000001"
+    setup.ilm.policy_name: filebeat-prod-policy
+    setup.ilm.overwrite: true
+    setup.ilm.policy_file: /etc/filebeat/ilm-policy.json
+  daemonSet:
+    podTemplate:
+      spec:
+        serviceAccountName: filebeat
+        automountServiceAccountToken: true
+        dnsPolicy: ClusterFirstWithHostNet
+        hostNetwork: true
+        nodeSelector:
+          agentpool: apps
+        securityContext:
+          runAsUser: 0
+        containers:
+          - name: filebeat
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                cpu: 200m
+                memory: 256Mi
+            volumeMounts:
+              - name: varlogcontainers
+                mountPath: /var/log/containers
+              - name: varlogpods
+                mountPath: /var/log/pods
+              - name: varlibdockercontainers
+                mountPath: /var/lib/docker/containers
+              - name: ilm-policy
+                mountPath: /etc/filebeat/ilm-policy.json
+                subPath: ilm-policy.json
+            env:
+              - name: NODE_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: spec.nodeName
+        volumes:
+          - name: varlogcontainers
+            hostPath:
+              path: /var/log/containers
+          - name: varlogpods
+            hostPath:
+              path: /var/log/pods
+          - name: varlibdockercontainers
+            hostPath:
+              path: /var/lib/docker/containers
+          - name: ilm-policy
+            configMap:
+              name: filebeat-ilm-policy
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-ilm-policy
+  namespace: logging
+data:
+  ilm-policy.json: |
+    {
+      "policy": {
+        "phases": {
+          "hot": {
+            "min_age": "0ms",
+            "actions": {
+              "rollover": {
+                "max_age": "7d"
+              }
+            }
+          },
+          "delete": {
+            "min_age": "30d",
+            "actions": {
+              "delete": {}
+            }
+          }
+        }
+      }
+    }
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: filebeat
+  namespace: logging
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: filebeat
+rules:
+  - apiGroups: [""]
+    resources:
+      - namespaces
+      - pods
+      - nodes
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources:
+      - replicasets
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: filebeat
+subjects:
+  - kind: ServiceAccount
+    name: filebeat
+    namespace: logging
+roleRef:
+  kind: ClusterRole
+  name: filebeat
+  apiGroup: rbac.authorization.k8s.io

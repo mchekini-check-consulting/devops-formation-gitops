@@ -21,6 +21,8 @@ excludeNamespaces:
   - istio-system
   - kong
   - monitoring
+  - logging
+  - elastic-system
 
 # Registries autorises
 allowedRegistries:
