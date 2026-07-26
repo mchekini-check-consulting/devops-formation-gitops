@@ -13,6 +13,7 @@ spec:
       - type: filestream
         id: prod-logs
         prospector.scanner.check_interval: 10s
+        prospector.scanner.symlinks: true
         paths:
           - /var/log/containers/catalogue-*_prod_*.log
           - /var/log/containers/order-*_prod_*.log
