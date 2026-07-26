@@ -12,7 +12,9 @@ spec:
     filebeat.inputs:
       - type: container
         paths:
-          - /var/log/containers/*_prod_*.log
+          - /var/log/containers/catalogue-*_prod_*.log
+          - /var/log/containers/order-*_prod_*.log
+          - /var/log/containers/payment-*_prod_*.log
         json.keys_under_root: true
         json.add_error_key: true
         json.message_key: message
@@ -22,10 +24,6 @@ spec:
           matchers:
             - logs_path:
                 logs_path: /var/log/containers/
-      - drop_event:
-          when:
-            equals:
-              kubernetes.container.name: front
     output.elasticsearch:
       index: "filebeat-prod-%{+yyyy.MM.dd}"
     setup.template.name: "filebeat-prod"
