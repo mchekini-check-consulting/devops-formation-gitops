@@ -28,7 +28,7 @@ configmap:
   POSTGRES_DB: "order"
   POSTGRES_SSLMODE: "disable"
   CORS_ALLOW_ALL_ORIGINS: "FALSE"
-  LOG_LEVEL: "WARNING"
+  LOG_LEVEL: "INFO"
   ENV_NAME: "prod"
 secret:
   enabled: false

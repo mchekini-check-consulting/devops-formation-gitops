@@ -26,7 +26,7 @@ configmap:
   DB_SSL: "false"
   PGSSLMODE: "disable"
   CORS_ALLOW_ALL_ORIGINS: "FALSE"
-  LOG_LEVEL: "WARNING"
+  LOG_LEVEL: "info"
 secret:
   enabled: false
 externalSecret:

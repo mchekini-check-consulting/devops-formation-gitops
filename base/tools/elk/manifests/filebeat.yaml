@@ -20,7 +20,7 @@ spec:
           - /var/log/containers/payment-*_prod_*.log
         parsers:
           - container:
-              stream: stdout
+              stream: all
               format: cri
           - ndjson:
               keys_under_root: true
