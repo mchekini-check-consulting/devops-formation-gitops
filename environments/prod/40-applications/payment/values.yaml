@@ -12,7 +12,7 @@ resources:
 configmap:
   SPRING_PROFILES_ACTIVE: "prod"
   SPRING_DATASOURCE_URL: "jdbc:postgresql://pgcat.prod.svc.cluster.local:5432/payment?sslmode=disable"
-  LOG_LEVEL: "WARN"
+  LOG_LEVEL: "INFO"
   JAVA_TOOL_OPTIONS: "-Xmx256m -Xms128m"
 secret:
   enabled: false
