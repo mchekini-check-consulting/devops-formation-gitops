@@ -43,6 +43,10 @@ spec:
               to: "httpPath"
           ignore_missing: true
           fail_on_error: false
+      - drop_event:
+          when:
+            regexp:
+              httpPath: '^/(healthz?|healthcheck|ready|readyz|live|livez|ping)$'
       - add_kubernetes_metadata:
           host: ${NODE_NAME}
           matchers:
