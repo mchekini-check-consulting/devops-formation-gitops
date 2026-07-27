@@ -46,7 +46,7 @@ spec:
       - drop_event:
           when:
             regexp:
-              httpPath: '(^|/)(healthz?|healthcheck|ready|readyz|live|livez|ping)$'
+              httpPath: '(^|/)(healthz?|healthcheck|ready|readyz|live|livez|ping|prometheus|metrics)$'
       - add_kubernetes_metadata:
           host: ${NODE_NAME}
           matchers:
