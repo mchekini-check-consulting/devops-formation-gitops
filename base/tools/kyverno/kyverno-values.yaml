@@ -2,7 +2,7 @@ crds:
   install: true
 
 admissionController:
-  replicas: 0
+  replicas: 1
   resources:
     limits:
       memory: 384Mi
@@ -11,7 +11,6 @@ admissionController:
       memory: 128Mi
 
 backgroundController:
-  replicas: 0
   resources:
     limits:
       memory: 256Mi
@@ -20,7 +19,6 @@ backgroundController:
       memory: 64Mi
 
 cleanupController:
-  replicas: 0
   resources:
     limits:
       memory: 256Mi
@@ -29,7 +27,6 @@ cleanupController:
       memory: 64Mi
 
 reportsController:
-  replicas: 0
   resources:
     limits:
       memory: 256Mi
