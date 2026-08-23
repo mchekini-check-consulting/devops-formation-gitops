@@ -11,7 +11,7 @@ resources:
     memory: 1Gi
 
 storage:
-  className: postgres-standard-ssd
+  className: gp3
   size: 2Gi
 
 patroni:
