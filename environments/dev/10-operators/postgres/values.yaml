@@ -14,6 +14,9 @@ storage:
   className: gp3
   size: 2Gi
 
+storageClass:
+  create: false
+
 patroni:
   ttl: 30
   loopWait: 10
