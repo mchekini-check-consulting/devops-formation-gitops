@@ -1,0 +1,11 @@
+clusterName: eks-formation-ecom
+region: us-east-1
+vpcId: vpc-0d97cd82d7f4499b8
+
+serviceAccount:
+  create: true
+  name: aws-load-balancer-controller
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::205493924920:role/role-formation-ecom-aws-lb-controller"
+
+replicaCount: 1
