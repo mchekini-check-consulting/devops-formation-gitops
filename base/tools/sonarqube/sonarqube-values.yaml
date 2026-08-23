@@ -6,15 +6,16 @@ replicaCount: 1
 image:
   pullPolicy: IfNotPresent
 
-# Exposition via Azure LoadBalancer (IP publique assignée par AKS)
-# Pour un LB interne (intra-VNet), décommenter l'annotation ci-dessous
+# Exposition via AWS NLB (AWS Load Balancer Controller requis)
+# Pour un LB interne (intra-VPC), remplacer le scheme par "internal"
 service:
   type: LoadBalancer
   externalPort: 9000
   internalPort: 9000
-  annotations: {}
-  # annotations:
-  #   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "external"
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
 
 ingress:
   enabled: false
@@ -42,7 +43,7 @@ initSysctl:
 
 persistence:
   enabled: true
-  storageClass: "managed-premium"
+  storageClass: "gp3"
   accessMode: ReadWriteOnce
   size: 10Gi
 
