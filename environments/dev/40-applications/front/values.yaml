@@ -10,11 +10,12 @@ resources:
     cpu: 200m
     memory: 128Mi
 configmap:
-  CATALOG: "https://98.66.248.206/api/products"
-  ORDERS: "https://98.66.248.206/api/orders"
-  PAYMENT: "https://98.66.248.206/api/payments"
+  CATALOG: "https://a76e1394f9b474a11bf71d91e5cfd3ef-616597816.us-east-1.elb.amazonaws.com/api/products"
+  ORDERS: "https://a76e1394f9b474a11bf71d91e5cfd3ef-616597816.us-east-1.elb.amazonaws.com/api/orders"
+  PAYMENT: "https://a76e1394f9b474a11bf71d91e5cfd3ef-616597816.us-east-1.elb.amazonaws.com/api/payments"
   AUTH_ENABLED: "true"
-  KEYCLOAK_URL: "https://51.11.203.15"
+  # TODO: remplacer par le hostname ELB reel de Keycloak une fois deploye sur EKS
+  KEYCLOAK_URL: "https://TODO-keycloak-elb-hostname"
   KEYCLOAK_REALM: "formation"
   KEYCLOAK_CLIENT_ID: "frontend-app"
 certificate:
@@ -22,14 +23,13 @@ certificate:
   name: front-dev-cert
   secretName: front-dev-tls
   issuer: selfsigned-issuer
-  ipAddresses:
-    - "98.66.248.206"
+  dnsNames:
+    - "a76e1394f9b474a11bf71d91e5cfd3ef-616597816.us-east-1.elb.amazonaws.com"
 ingress:
   enabled: true
   name: front-ingress-dev
-  className: nginx
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
+  className: kong
+  annotations: {}
   tls:
     - secretName: front-dev-tls
   routes:
