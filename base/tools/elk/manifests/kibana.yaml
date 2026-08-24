@@ -11,7 +11,7 @@ spec:
   podTemplate:
     spec:
       nodeSelector:
-        agentpool: apps
+        workload: apps
       containers:
         - name: kibana
           resources:

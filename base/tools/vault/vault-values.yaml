@@ -14,10 +14,9 @@ server:
         path = "/vault/data"
       }
 
-      seal "azurekeyvault" {
-        tenant_id  = "6902d3b0-d2cd-4bc6-98ac-143e83b162d7"
-        vault_name = "kv-formation-security"
-        key_name   = "vault-unseal-key"
+      seal "awskms" {
+        region     = "us-east-1"
+        kms_key_id = "8ddafc7c-6e03-452e-a293-23dea5cc5edc"
       }
 
   ha:
@@ -26,7 +25,7 @@ server:
   dataStorage:
     enabled: true
     size: 2Gi
-    storageClass: managed-csi
+    storageClass: gp3
 
   auditStorage:
     enabled: false
@@ -40,7 +39,7 @@ server:
       memory: 256Mi
 
   nodeSelector:
-    kubernetes.azure.com/agentpool: db
+    workload: database
 
   tolerations:
     - key: "workload"
@@ -50,10 +49,7 @@ server:
 
   serviceAccount:
     annotations:
-      azure.workload.identity/client-id: "bfb756b0-1b58-40eb-aa7d-af77dc624670"
-
-  extraLabels:
-    azure.workload.identity/use: "true"
+      eks.amazonaws.com/role-arn: "arn:aws:iam::205493924920:role/role-formation-ecom-vault"
 
 ui:
   enabled: true
