@@ -1,7 +1,7 @@
 image:
   tag: 36e508b-main-20260729135740 # sha-slugbranch-timestamp
 namespace: dev
-replicaCount: 2
+replicaCount: 1
 resources:
   requests:
     cpu: 50m
@@ -22,7 +22,7 @@ externalSecret:
 ingress:
   name: payment-ingress-dev
 hpa:
-  minReplicas: 2
+  minReplicas: 1
   maxReplicas: 4
   cpu:
     averageUtilization: 70
