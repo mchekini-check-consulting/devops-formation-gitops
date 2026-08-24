@@ -12,7 +12,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: managed-premium
+          storageClassName: gp3
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
@@ -97,7 +97,7 @@ alertmanager:
     storage:
       volumeClaimTemplate:
         spec:
-          storageClassName: managed-premium
+          storageClassName: gp3
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
@@ -202,7 +202,7 @@ grafana:
         datasource: Prometheus
   persistence:
     enabled: true
-    storageClassName: managed-premium
+    storageClassName: gp3
     size: 5Gi
 
 # ─── Node Exporter ─────────────────────────────────────────────────────────────

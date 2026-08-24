@@ -14,7 +14,7 @@ spec:
       podTemplate:
         spec:
           nodeSelector:
-            agentpool: apps
+            workload: apps
           containers:
             - name: elasticsearch
               resources:
@@ -33,4 +33,4 @@ spec:
             resources:
               requests:
                 storage: 10Gi
-            storageClassName: managed-csi
+            storageClassName: gp3

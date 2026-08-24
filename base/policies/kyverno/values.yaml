@@ -31,7 +31,7 @@ allowedRegistries:
   - "ghcr.io/*"
   - "registry.k8s.io/*"
   - "quay.io/*"
-  - "*.azurecr.io/*"
+  - "205493924920.dkr.ecr.us-east-1.amazonaws.com/*"
   - "docker.io/bitnamilegacy/*"
   - "docker.io/istio/*"
   - "registry.istio.io/*"

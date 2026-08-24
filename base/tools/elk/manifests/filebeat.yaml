@@ -61,7 +61,7 @@ spec:
         dnsPolicy: ClusterFirstWithHostNet
         hostNetwork: true
         nodeSelector:
-          agentpool: apps
+          workload: apps
         securityContext:
           runAsUser: 0
         containers:
