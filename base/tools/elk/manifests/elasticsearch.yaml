@@ -20,10 +20,10 @@ spec:
               resources:
                 requests:
                   cpu: 300m
-                  memory: 1Gi
+                  memory: 1536Mi
                 limits:
                   cpu: "1"
-                  memory: 2Gi
+                  memory: 2560Mi
       volumeClaimTemplates:
         - metadata:
             name: elasticsearch-data
