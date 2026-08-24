@@ -21,9 +21,6 @@ externalSecret:
   vaultPath: prod/payment
 ingress:
   enabled: false
-netpolicies:
-  extraIngressNamespaces:
-    - kong
 hpa:
   minReplicas: 2
   maxReplicas: 4
