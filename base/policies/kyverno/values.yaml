@@ -27,6 +27,7 @@ excludeNamespaces:
 # Registries autorises
 allowedRegistries:
   - "docker.io/library/*"
+  - "docker.io/jubatouam/*"
   - "docker.io/bitnami/*"
   - "ghcr.io/*"
   - "registry.k8s.io/*"

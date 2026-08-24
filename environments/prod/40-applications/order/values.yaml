@@ -37,9 +37,6 @@ externalSecret:
   vaultPath: prod/order
 ingress:
   enabled: false
-netpolicies:
-  extraIngressNamespaces:
-    - kong
 hpa:
   minReplicas: 2
   maxReplicas: 6
