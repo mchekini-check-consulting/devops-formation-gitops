@@ -1,7 +1,7 @@
 image:
   tag: 2df16df-main-20260824182932 # sha-slugbranch-timestamp
 namespace: dev
-replicaCount: 2
+replicaCount: 1
 resources:
   requests:
     cpu: 50m
@@ -38,19 +38,3 @@ ingress:
       service:
         name: front
         port: 80
-hpa:
-  minReplicas: 2
-  maxReplicas: 4
-  cpu:
-    averageUtilization: 70
-  memory:
-    averageUtilization: 80
-  behavior:
-    scaleUp:
-      stabilizationWindowSeconds: 60
-      percent: 100
-      periodSeconds: 60
-    scaleDown:
-      stabilizationWindowSeconds: 300
-      percent: 25
-      periodSeconds: 60

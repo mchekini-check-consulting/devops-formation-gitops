@@ -27,6 +27,3 @@ patroni:
     maxConnections: 150
     walKeepSize: "128MB"
     hotStandbyFeedback: "on"
-
-pdb:
-  minAvailable: 2

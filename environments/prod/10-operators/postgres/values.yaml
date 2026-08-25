@@ -27,6 +27,3 @@ patroni:
 
 storageClass:
   create: false
-
-pdb:
-  minAvailable: 1
