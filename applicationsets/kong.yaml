@@ -29,3 +29,19 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+  ignoreDifferences:
+    - kind: Secret
+      name: kong-controller-validation-webhook-ca-keypair
+      namespace: kong
+      jsonPointers:
+        - /data
+    - kind: Secret
+      name: kong-controller-validation-webhook-keypair
+      namespace: kong
+      jsonPointers:
+        - /data
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: kong-controller-kong-validations
+      jsonPointers:
+        - /webhooks

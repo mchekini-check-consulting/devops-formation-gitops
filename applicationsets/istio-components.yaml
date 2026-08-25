@@ -4,6 +4,8 @@ metadata:
   name: istio-components
   namespace: argocd
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
     - list:
         elements:
@@ -18,18 +20,40 @@ spec:
             syncWave: "1"
   template:
     metadata:
-      name: "{{name}}"
+      name: "{{.name}}"
       annotations:
-        argocd.argoproj.io/sync-wave: "{{syncWave}}"
+        argocd.argoproj.io/sync-wave: "{{.syncWave}}"
     spec:
       project: default
       sources:
         - repoURL: https://istio-release.storage.googleapis.com/charts
-          chart: "{{chart}}"
+          chart: "{{.chart}}"
           targetRevision: "~1"
           helm:
             values: |
               profile: ambient
+              {{- if eq .name "istio-ztunnel" }}
+              # Reels : ~2-14Mi observes par noeud (DaemonSet), le defaut du
+              # chart (512Mi request) etait tres surdimensionne.
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 64Mi
+                limits:
+                  cpu: 200m
+                  memory: 128Mi
+              {{- end }}
+              {{- if eq .name "istio-cni" }}
+              # Reels : ~14-27Mi observes par noeud (DaemonSet), le defaut du
+              # chart (100Mi request) laissait de la marge inutile.
+              resources:
+                requests:
+                  cpu: 25m
+                  memory: 48Mi
+                limits:
+                  cpu: 100m
+                  memory: 96Mi
+              {{- end }}
       destination:
         server: https://kubernetes.default.svc
         namespace: istio-system
