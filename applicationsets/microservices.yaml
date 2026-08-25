@@ -23,8 +23,6 @@ spec:
                   repo: https://github.com/mchekini-check-consulting/devops-formation-front.git
           - list:
               elements:
-                - env: dev
-                  namespace: dev
                 - env: prod
                   namespace: prod
   template:
