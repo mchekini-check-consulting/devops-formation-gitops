@@ -36,19 +36,3 @@ ingress:
   name: catalogue-ingress-dev
 rollout:
   enabled: false
-hpa:
-  minReplicas: 2
-  maxReplicas: 4
-  cpu:
-    averageUtilization: 70
-  memory:
-    averageUtilization: 80
-  behavior:
-    scaleUp:
-      stabilizationWindowSeconds: 60
-      percent: 100
-      periodSeconds: 60
-    scaleDown:
-      stabilizationWindowSeconds: 300
-      percent: 25
-      periodSeconds: 60

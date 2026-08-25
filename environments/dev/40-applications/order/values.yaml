@@ -1,7 +1,7 @@
 image:
   tag: 3690964-main-20260727214925 # sha-slugbranch-timestamp
 namespace: dev
-replicaCount: 2
+replicaCount: 1
 resources:
   requests:
     cpu: 25m
@@ -37,19 +37,3 @@ externalSecret:
   vaultPath: dev/order
 ingress:
   name: order-ingress-dev
-hpa:
-  minReplicas: 2
-  maxReplicas: 4
-  cpu:
-    averageUtilization: 70
-  memory:
-    averageUtilization: 80
-  behavior:
-    scaleUp:
-      stabilizationWindowSeconds: 60
-      percent: 100
-      periodSeconds: 60
-    scaleDown:
-      stabilizationWindowSeconds: 300
-      percent: 25
-      periodSeconds: 60
