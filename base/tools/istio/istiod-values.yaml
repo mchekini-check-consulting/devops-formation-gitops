@@ -1,10 +1,10 @@
 pilot:
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 50m
+      memory: 128Mi
     limits:
-      memory: 512Mi
+      memory: 384Mi
   env:
     PILOT_ENABLE_AMBIENT: "true"
 

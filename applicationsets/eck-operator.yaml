@@ -11,6 +11,12 @@ spec:
     - repoURL: https://helm.elastic.co
       chart: eck-operator
       targetRevision: "2.*"
+      helm:
+        valueFiles:
+          - $values/base/tools/eck-operator/eck-operator-values.yaml
+    - repoURL: https://github.com/mchekini-check-consulting/devops-formation-gitops.git
+      targetRevision: main
+      ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic-system

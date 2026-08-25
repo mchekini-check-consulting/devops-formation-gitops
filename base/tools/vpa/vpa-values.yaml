@@ -2,11 +2,11 @@ recommender:
   enabled: true
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 25m
+      memory: 48Mi
     limits:
       cpu: 200m
-      memory: 256Mi
+      memory: 128Mi
 
 updater:
   enabled: true
