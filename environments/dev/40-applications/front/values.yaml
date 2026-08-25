@@ -15,7 +15,7 @@ configmap:
   PAYMENT: "https://a76e1394f9b474a11bf71d91e5cfd3ef-616597816.us-east-1.elb.amazonaws.com/api/payments"
   AUTH_ENABLED: "true"
   # TODO: remplacer par le hostname ELB reel de Keycloak une fois deploye sur EKS
-  KEYCLOAK_URL: "https://TODO-keycloak-elb-hostname"
+  KEYCLOAK_URL: "https://k8s-keycloak-keycloak-4064f01ea2-9337af193f3f2306.elb.us-east-1.amazonaws.com"
   KEYCLOAK_REALM: "formation"
   KEYCLOAK_CLIENT_ID: "frontend-app"
 certificate:
