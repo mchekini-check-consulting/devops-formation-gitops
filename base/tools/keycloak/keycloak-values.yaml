@@ -26,8 +26,11 @@ extraEnvVars:
   # pgcat n'implemente pas la negociation SSLRequest sur son listener frontal :
   # il coupe la connexion au lieu de repondre "SSL non supporte", d'ou le besoin
   # de desactiver explicitement le SSL cote client (meme pattern que catalog/order/payment).
-  - name: KC_DB_URL_PROPERTIES
-    value: "?sslmode=disable"
+  # KC_DB_URL_PROPERTIES seul ne suffit pas (conflit avec ?currentSchema=public deja
+  # present dans KC_DB_URL genere par le chart) : on surcharge KC_DB_URL en entier,
+  # un env explicite primant sur la valeur venant du ConfigMap (envFrom).
+  - name: KC_DB_URL
+    value: "jdbc:postgresql://pgcat.prod.svc.cluster.local:5432/keycloak?currentSchema=public&sslmode=disable"
 
 service:
   type: LoadBalancer
