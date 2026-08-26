@@ -22,6 +22,13 @@ externalDatabase:
   existingSecret: keycloak-secret
   existingSecretPasswordKey: KEYCLOAK_DB_PASSWORD
 
+extraEnvVars:
+  # pgcat n'implemente pas la negociation SSLRequest sur son listener frontal :
+  # il coupe la connexion au lieu de repondre "SSL non supporte", d'ou le besoin
+  # de desactiver explicitement le SSL cote client (meme pattern que catalog/order/payment).
+  - name: KC_DB_URL_PROPERTIES
+    value: "?sslmode=disable"
+
 service:
   type: LoadBalancer
   ports:
