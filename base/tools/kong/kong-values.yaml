@@ -16,6 +16,12 @@ gateway:
     database: "off"
     nginx_worker_processes: "2"
     untrusted_lua: "on"
+    # Certificat cert-manager (formation-ca) monte via secretVolumes ci-dessous,
+    # a la place du placeholder auto-signe (CN=localhost) livre par defaut avec l'image Kong.
+    ssl_cert: /etc/secrets/kong-proxy-tls/tls.crt
+    ssl_cert_key: /etc/secrets/kong-proxy-tls/tls.key
+  secretVolumes:
+    - kong-proxy-tls
   resources:
     requests:
       cpu: 100m
