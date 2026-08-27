@@ -1,5 +1,8 @@
 namespace: prod
 
+postgres:
+  replicaCount: 2
+
 resources:
   requests:
     cpu: 200m
