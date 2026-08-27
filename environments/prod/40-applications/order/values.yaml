@@ -1,5 +1,5 @@
 image:
-  tag: sha256-b716e83648de71fe69a83ab2610c457c71140cbe860ee5ec867f448e8ebac06a.sig # sha-slugbranch-timestamp
+  tag: 14426bb-main-20260827172158 # sha-slugbranch-timestamp
 namespace: prod
 replicaCount: 1
 resources:
