@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kong-proxy-cert
+  namespace: kong
+spec:
+  secretName: kong-proxy-tls
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - a76e1394f9b474a11bf71d91e5cfd3ef-616597816.us-east-1.elb.amazonaws.com
