@@ -39,13 +39,7 @@ server:
       memory: 200Mi
 
   nodeSelector:
-    workload: database
-
-  tolerations:
-    - key: "workload"
-      operator: "Equal"
-      value: "database"
-      effect: "NoSchedule"
+    workload: apps
 
   serviceAccount:
     annotations:
