@@ -8,9 +8,14 @@ metadata:
 spec:
   gatewayClassName: kong
   listeners:
-    - name: proxy
-      protocol: HTTP
-      port: 80
+    - name: proxy-tls
+      protocol: HTTPS
+      port: 443
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: platform-tls
       allowedRoutes:
         namespaces:
           from: All

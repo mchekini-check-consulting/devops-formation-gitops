@@ -10,12 +10,11 @@ resources:
     cpu: 200m
     memory: 128Mi
 configmap:
-  CATALOG: "https://a76e1394f9b474a11bf71d91e5cfd3ef-616597816.us-east-1.elb.amazonaws.com/api/products"
-  ORDERS: "https://a76e1394f9b474a11bf71d91e5cfd3ef-616597816.us-east-1.elb.amazonaws.com/api/orders"
-  PAYMENT: "https://a76e1394f9b474a11bf71d91e5cfd3ef-616597816.us-east-1.elb.amazonaws.com/api/payments"
+  CATALOG: "https://shop.check-consulting.net/api/products"
+  ORDERS: "https://shop.check-consulting.net/api/orders"
+  PAYMENT: "https://shop.check-consulting.net/api/payments"
   AUTH_ENABLED: "true"
-  # TODO: remplacer par le hostname ELB reel de Keycloak une fois deploye sur EKS
-  KEYCLOAK_URL: "https://k8s-keycloak-keycloak-4064f01ea2-9337af193f3f2306.elb.us-east-1.amazonaws.com"
+  KEYCLOAK_URL: "https://keycloak.check-consulting.net"
   KEYCLOAK_REALM: "formation"
   KEYCLOAK_CLIENT_ID: "frontend-app"
 certificate:

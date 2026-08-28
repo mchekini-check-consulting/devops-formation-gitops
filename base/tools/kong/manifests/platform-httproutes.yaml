@@ -1,0 +1,236 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: grafana-httproute
+  namespace: monitoring
+spec:
+  parentRefs:
+    - name: kong-gateway
+      namespace: kong
+      sectionName: proxy-tls
+  hostnames:
+    - grafana.check-consulting.net
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: kube-prometheus-stack-grafana
+          port: 80
+          kind: Service
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: sonar-httproute
+  namespace: sonarqube
+spec:
+  parentRefs:
+    - name: kong-gateway
+      namespace: kong
+      sectionName: proxy-tls
+  hostnames:
+    - sonar.check-consulting.net
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: sonarqube-sonarqube
+          port: 9000
+          kind: Service
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: kibana-httproute
+  namespace: logging
+spec:
+  parentRefs:
+    - name: kong-gateway
+      namespace: kong
+      sectionName: proxy-tls
+  hostnames:
+    - elastic.check-consulting.net
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: kibana-kb-http
+          port: 5601
+          kind: Service
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: argocd-httproute
+  namespace: argocd
+spec:
+  parentRefs:
+    - name: kong-gateway
+      namespace: kong
+      sectionName: proxy-tls
+  hostnames:
+    - argocd.check-consulting.net
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: argocd-server
+          port: 80
+          kind: Service
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: keycloak-httproute
+  namespace: keycloak
+spec:
+  parentRefs:
+    - name: kong-gateway
+      namespace: kong
+      sectionName: proxy-tls
+  hostnames:
+    - keycloak.check-consulting.net
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: keycloak
+          port: 80
+          kind: Service
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: shop-httproute
+  namespace: prod
+spec:
+  parentRefs:
+    - name: kong-gateway
+      namespace: kong
+      sectionName: proxy-tls
+  hostnames:
+    - shop.check-consulting.net
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: front
+          port: 80
+          kind: Service
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: catalogue-httproute
+  namespace: prod
+  annotations:
+    konghq.com/plugins: cors,jwt-auth,extract-jwt-sub,rate-limit-catalog,proxy-cache-products
+    konghq.com/strip-path: "false"
+spec:
+  parentRefs:
+    - name: kong-gateway
+      namespace: kong
+      sectionName: proxy-tls
+  hostnames:
+    - shop.check-consulting.net
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/products
+      backendRefs:
+        - name: catalogue
+          port: 4000
+          kind: Service
+          weight: 100
+        - name: catalogue-canary
+          port: 4000
+          kind: Service
+          weight: 0
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: catalogue-by-id-httproute
+  namespace: prod
+  annotations:
+    konghq.com/plugins: cors,jwt-auth,extract-jwt-sub,rate-limit-catalog,proxy-cache-product-by-id
+    konghq.com/strip-path: "false"
+spec:
+  parentRefs:
+    - name: kong-gateway
+      namespace: kong
+      sectionName: proxy-tls
+  hostnames:
+    - shop.check-consulting.net
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/products/
+      backendRefs:
+        - name: catalogue
+          port: 4000
+          kind: Service
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: order-httproute
+  namespace: prod
+  annotations:
+    konghq.com/plugins: cors,jwt-auth,extract-jwt-sub,rate-limit-order
+    konghq.com/strip-path: "false"
+spec:
+  parentRefs:
+    - name: kong-gateway
+      namespace: kong
+      sectionName: proxy-tls
+  hostnames:
+    - shop.check-consulting.net
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/orders
+      backendRefs:
+        - name: order
+          port: 8000
+          kind: Service
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: payment-httproute
+  namespace: prod
+  annotations:
+    konghq.com/plugins: cors,jwt-auth,extract-jwt-sub,rate-limit-payment
+    konghq.com/strip-path: "false"
+spec:
+  parentRefs:
+    - name: kong-gateway
+      namespace: kong
+      sectionName: proxy-tls
+  hostnames:
+    - shop.check-consulting.net
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/payments
+      backendRefs:
+        - name: payment
+          port: 8082
+          kind: Service

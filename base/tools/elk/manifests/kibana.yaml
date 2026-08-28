@@ -22,6 +22,9 @@ spec:
               cpu: 500m
               memory: 1Gi
   http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
     service:
       spec:
-        type: LoadBalancer
+        type: ClusterIP

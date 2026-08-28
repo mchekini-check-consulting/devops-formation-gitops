@@ -6,16 +6,11 @@ replicaCount: 1
 image:
   pullPolicy: IfNotPresent
 
-# Exposition via AWS NLB (AWS Load Balancer Controller requis)
-# Pour un LB interne (intra-VPC), remplacer le scheme par "internal"
+# Exposition via Kong (sonar.check-consulting.net) - plus de NLB dedie
 service:
-  type: LoadBalancer
+  type: ClusterIP
   externalPort: 9000
   internalPort: 9000
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: "external"
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
-    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
 
 ingress:
   enabled: false

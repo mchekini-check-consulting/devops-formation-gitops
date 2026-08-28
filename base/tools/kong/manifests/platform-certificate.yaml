@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: platform-cert
+  namespace: kong
+spec:
+  secretName: platform-tls
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - argocd.check-consulting.net
+    - elastic.check-consulting.net
+    - grafana.check-consulting.net
+    - keycloak.check-consulting.net
+    - sonar.check-consulting.net
+    - shop.check-consulting.net

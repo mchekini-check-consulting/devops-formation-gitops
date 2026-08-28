@@ -31,23 +31,20 @@ extraEnvVars:
   # un env explicite primant sur la valeur venant du ConfigMap (envFrom).
   - name: KC_DB_URL
     value: "jdbc:postgresql://pgcat.prod.svc.cluster.local:5432/keycloak?currentSchema=public&sslmode=disable"
+  # Kong termine le TLS en periphérie (keycloak.check-consulting.net) ; Keycloak
+  # sert du HTTP en interne mais doit quand meme generer des URLs d'issuer/redirect
+  # OIDC en https, d'ou KC_PROXY=edge + KC_HOSTNAME explicite.
+  - name: KC_PROXY
+    value: "edge"
+  - name: KC_HOSTNAME
+    value: "https://keycloak.check-consulting.net"
 
+# Expose via Kong (keycloak.check-consulting.net) - plus de NLB dedie
 service:
-  type: LoadBalancer
-  ports:
-    https: 443
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: "external"
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
-    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
-    # Auto-decouverte des subnets par tags en echec pour ce service
-    # (Evaluated 0 subnets malgre un tagging correct) ; on les specifie
-    # explicitement pour contourner le probleme.
-    service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-0b2a9bea0083212a3,subnet-016a482142d66324f,subnet-086e120bd531f1243"
+  type: ClusterIP
 
 tls:
-  enabled: true
-  existingSecret: keycloak-tls
+  enabled: false
 
 ingress:
   enabled: false
