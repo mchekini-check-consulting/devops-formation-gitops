@@ -20,8 +20,8 @@ resources:
     cpu: 400m
     memory: 2560Mi
   requests:
-    cpu: 200m
-    memory: 1536Mi
+    cpu: 10m
+    memory: 20Mi
 
 # JVM heaps optimisés pour 4 projets en formation
 jvmOpts: "-Xmx512m -Xms512m"

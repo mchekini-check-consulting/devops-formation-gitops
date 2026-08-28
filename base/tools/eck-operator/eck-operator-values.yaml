@@ -1,8 +1,8 @@
 # Reels : ~51Mi observes, le defaut du chart (150Mi request) etait surdimensionne.
 resources:
   requests:
-    cpu: 50m
-    memory: 64Mi
+    cpu: 10m
+    memory: 20Mi
   limits:
     cpu: 200m
     memory: 128Mi

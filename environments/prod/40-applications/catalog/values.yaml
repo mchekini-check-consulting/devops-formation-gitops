@@ -4,8 +4,8 @@ namespace: prod
 replicaCount: 1
 resources:
   requests:
-    cpu: 15m
-    memory: 96Mi
+    cpu: 10m
+    memory: 20Mi
   limits:
     cpu: 50m
     memory: 200Mi

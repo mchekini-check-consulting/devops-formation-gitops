@@ -37,8 +37,8 @@ spec:
               # chart (512Mi request) etait tres surdimensionne.
               resources:
                 requests:
-                  cpu: 50m
-                  memory: 64Mi
+                  cpu: 10m
+                  memory: 20Mi
                 limits:
                   cpu: 200m
                   memory: 128Mi
@@ -48,8 +48,8 @@ spec:
               # chart (100Mi request) laissait de la marge inutile.
               resources:
                 requests:
-                  cpu: 25m
-                  memory: 48Mi
+                  cpu: 10m
+                  memory: 20Mi
                 limits:
                   cpu: 100m
                   memory: 96Mi

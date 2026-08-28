@@ -51,8 +51,8 @@ ingress:
 
 resources:
   requests:
-    cpu: 125m
-    memory: 512Mi
+    cpu: 10m
+    memory: 20Mi
   limits:
     memory: 1Gi
 
@@ -64,8 +64,8 @@ keycloakConfigCli:
     repository: bitnamilegacy/keycloak-config-cli
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 10m
+      memory: 20Mi
     limits:
       cpu: 200m
       memory: 256Mi

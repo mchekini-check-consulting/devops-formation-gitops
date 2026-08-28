@@ -5,8 +5,8 @@ controller:
       feature_gates: GatewayAlpha=true
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 10m
+      memory: 20Mi
     limits:
       cpu: 200m
       memory: 256Mi
@@ -24,8 +24,8 @@ gateway:
     - kong-proxy-tls
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 10m
+      memory: 20Mi
     limits:
       cpu: 500m
       memory: 512Mi
