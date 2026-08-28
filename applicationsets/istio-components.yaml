@@ -37,10 +37,10 @@ spec:
               # chart (512Mi request) etait tres surdimensionne.
               resources:
                 requests:
-                  cpu: 50m
+                  cpu: 15m
                   memory: 64Mi
                 limits:
-                  cpu: 200m
+                  cpu: 100m
                   memory: 128Mi
               {{- end }}
               {{- if eq .name "istio-cni" }}
@@ -48,10 +48,10 @@ spec:
               # chart (100Mi request) laissait de la marge inutile.
               resources:
                 requests:
-                  cpu: 25m
+                  cpu: 10m
                   memory: 48Mi
                 limits:
-                  cpu: 100m
+                  cpu: 50m
                   memory: 96Mi
               {{- end }}
       destination:
