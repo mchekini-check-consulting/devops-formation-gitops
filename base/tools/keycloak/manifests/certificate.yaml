@@ -7,5 +7,6 @@ spec:
   issuerRef:
     name: ca-issuer
     kind: ClusterIssuer
-  ipAddresses:
-    - "51.11.203.15"
+  dnsNames:
+    - "k8s-keycloak-keycloak-4064f01ea2-9337af193f3f2306.elb.us-east-1.amazonaws.com"
+    - "keycloak.check-consulting.net"
