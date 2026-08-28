@@ -3,6 +3,10 @@ crds:
 
 admissionController:
   replicas: 1
+  tolerations:
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
+      effect: "NoSchedule"
   resources:
     limits:
       memory: 384Mi
@@ -11,6 +15,10 @@ admissionController:
       memory: 128Mi
 
 backgroundController:
+  tolerations:
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
+      effect: "NoSchedule"
   resources:
     limits:
       memory: 256Mi
@@ -19,6 +27,10 @@ backgroundController:
       memory: 64Mi
 
 cleanupController:
+  tolerations:
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
+      effect: "NoSchedule"
   resources:
     limits:
       memory: 256Mi
@@ -27,6 +39,10 @@ cleanupController:
       memory: 64Mi
 
 reportsController:
+  tolerations:
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
+      effect: "NoSchedule"
   resources:
     limits:
       memory: 256Mi

@@ -15,6 +15,11 @@ serviceMonitor:
   namespace: monitoring
   interval: 30s
 
+tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Exists"
+    effect: "NoSchedule"
+
 resources:
   requests:
     cpu: 15m

@@ -1,5 +1,9 @@
 controller:
   replicas: 1
+  tolerations:
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
+      effect: "NoSchedule"
   resources:
     requests:
       cpu: 25m

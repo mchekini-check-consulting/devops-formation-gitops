@@ -1,4 +1,9 @@
 # Reels : ~51Mi observes, le defaut du chart (150Mi request) etait surdimensionne.
+tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Exists"
+    effect: "NoSchedule"
+
 resources:
   requests:
     cpu: 20m

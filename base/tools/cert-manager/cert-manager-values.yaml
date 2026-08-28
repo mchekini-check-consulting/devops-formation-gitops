@@ -1,6 +1,11 @@
 crds:
   enabled: true
 
+tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Exists"
+    effect: "NoSchedule"
+
 resources:
   requests:
     cpu: 25m
@@ -9,6 +14,10 @@ resources:
     memory: 64Mi
 
 webhook:
+  tolerations:
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
+      effect: "NoSchedule"
   resources:
     requests:
       cpu: 25m
@@ -17,6 +26,10 @@ webhook:
       memory: 64Mi
 
 cainjector:
+  tolerations:
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
+      effect: "NoSchedule"
   resources:
     requests:
       cpu: 25m
