@@ -7,7 +7,7 @@ admissionController:
     limits:
       memory: 384Mi
     requests:
-      cpu: 100m
+      cpu: 25m
       memory: 128Mi
 
 backgroundController:
@@ -15,7 +15,7 @@ backgroundController:
     limits:
       memory: 256Mi
     requests:
-      cpu: 100m
+      cpu: 25m
       memory: 64Mi
 
 cleanupController:
@@ -23,7 +23,7 @@ cleanupController:
     limits:
       memory: 256Mi
     requests:
-      cpu: 100m
+      cpu: 25m
       memory: 64Mi
 
 reportsController:
@@ -31,5 +31,5 @@ reportsController:
     limits:
       memory: 256Mi
     requests:
-      cpu: 100m
+      cpu: 25m
       memory: 64Mi
