@@ -8,7 +8,7 @@ tolerations:
 
 resources:
   requests:
-    cpu: 25m
+    cpu: 10m
     memory: 32Mi
   limits:
     memory: 64Mi
@@ -20,7 +20,7 @@ webhook:
       effect: "NoSchedule"
   resources:
     requests:
-      cpu: 25m
+      cpu: 10m
       memory: 32Mi
     limits:
       memory: 64Mi
@@ -32,7 +32,7 @@ cainjector:
       effect: "NoSchedule"
   resources:
     requests:
-      cpu: 25m
+      cpu: 10m
       memory: 32Mi
     limits:
       memory: 128Mi

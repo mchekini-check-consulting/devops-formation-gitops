@@ -32,7 +32,7 @@ server:
 
   resources:
     requests:
-      cpu: 50m
+      cpu: 10m
       memory: 80Mi
     limits:
       cpu: 250m
