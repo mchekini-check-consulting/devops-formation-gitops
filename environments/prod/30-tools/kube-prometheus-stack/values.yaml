@@ -2,6 +2,10 @@
 prometheus:
   prometheusSpec:
     retention: 30d
+    # PV dej provisionne en us-east-1c ; seul node de cette AZ est taint CriticalAddonsOnly
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
     resources:
       requests:
         cpu: 10m
@@ -85,6 +89,9 @@ prometheus:
 # ─── Alertmanager ──────────────────────────────────────────────────────────────
 alertmanager:
   alertmanagerSpec:
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
     secrets:
       - alertmanager-smtp
     resources:
@@ -158,9 +165,13 @@ alertmanager:
 grafana:
   enabled: true
   adminPassword: "admin"
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
   grafana.ini:
     server:
-      root_url: "http://20.74.43.236"
+      domain: grafana.check-consulting.net
+      root_url: "https://grafana.check-consulting.net"
   resources:
     requests:
       cpu: 10m
@@ -200,10 +211,10 @@ grafana:
         gnetId: 7424
         revision: 7
         datasource: Prometheus
+  # Tout est declaratif (dashboards + datasources provisionnes) -> pas besoin de PVC.
+  # Evite aussi le PV EBS bloque dans une AZ sans node schedulable.
   persistence:
-    enabled: true
-    storageClassName: gp3
-    size: 5Gi
+    enabled: false
 
 # ─── Node Exporter ─────────────────────────────────────────────────────────────
 nodeExporter:
