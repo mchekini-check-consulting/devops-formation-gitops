@@ -182,11 +182,7 @@ grafana:
   sidecar:
     dashboards:
       enabled: true
-  additionalDataSources:
-    - name: Prometheus
-      type: prometheus
-      url: http://kube-prometheus-stack-prometheus:9090
-      isDefault: true
+  # datasource Prometheus par defaut deja provisionnee par le chart -> pas de additionalDataSources
   dashboardProviders:
     dashboardproviders.yaml:
       apiVersion: 1
