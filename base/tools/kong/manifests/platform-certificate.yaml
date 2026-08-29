@@ -15,3 +15,4 @@ spec:
     - keycloak.check-consulting.net
     - sonar.check-consulting.net
     - shop.check-consulting.net
+    - argorollout.check-consulting.net
