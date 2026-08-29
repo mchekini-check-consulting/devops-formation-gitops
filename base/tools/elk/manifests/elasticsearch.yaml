@@ -18,13 +18,15 @@ spec:
           containers:
             - name: elasticsearch
               resources:
-                # ECK impose requests.memory == limits.memory (heap JVM derivee de cette valeur)
+                # ECK impose requests.memory == limits.memory (heap JVM = 50% de cette valeur).
+                # 356Mi => OOMKilled au demarrage. Minimum realiste ES 8.x ~2Gi.
+                # cpu: seul memory doit avoir request == limit, pas cpu.
                 requests:
-                  cpu: 100m
-                  memory: 356Mi
+                  cpu: 250m
+                  memory: 660Mi
                 limits:
-                  cpu: "100m"
-                  memory: 356Mi
+                  cpu: "400"
+                  memory: 660Mi
       volumeClaimTemplates:
         - metadata:
             name: elasticsearch-data
