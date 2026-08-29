@@ -5,7 +5,7 @@ metadata:
   namespace: prod
 plugin: rate-limiting
 config:
-  minute: 3
+  minute: 20
   policy: local
   limit_by: header
   header_name: X-User-Sub
