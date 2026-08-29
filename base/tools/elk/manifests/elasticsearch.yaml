@@ -21,10 +21,10 @@ spec:
                 # ECK impose requests.memory == limits.memory (heap JVM derivee de cette valeur)
                 requests:
                   cpu: 100m
-                  memory: 256Mi
+                  memory: 356Mi
                 limits:
                   cpu: "100m"
-                  memory: 256Mi
+                  memory: 356Mi
       volumeClaimTemplates:
         - metadata:
             name: elasticsearch-data
