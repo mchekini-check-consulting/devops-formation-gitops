@@ -18,12 +18,13 @@ spec:
           containers:
             - name: elasticsearch
               resources:
+                # ECK impose requests.memory == limits.memory (heap JVM derivee de cette valeur)
                 requests:
-                  cpu: 10m
-                  memory: 20Mi
+                  cpu: 100m
+                  memory: 256Mi
                 limits:
-                  cpu: "1"
-                  memory: 2560Mi
+                  cpu: "100m"
+                  memory: 256Mi
       volumeClaimTemplates:
         - metadata:
             name: elasticsearch-data
