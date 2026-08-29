@@ -23,10 +23,10 @@ spec:
                 # cpu: seul memory doit avoir request == limit, pas cpu.
                 requests:
                   cpu: 250m
-                  memory: 2060Mi
+                  memory: 2080Mi
                 limits:
-                  cpu: "100m"
-                  memory: 2060Mi
+                  cpu: 700m
+                  memory: 2080Mi
       volumeClaimTemplates:
         - metadata:
             name: elasticsearch-data
