@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: platform-tls
   issuerRef:
-    name: ca-issuer
+    name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
     - argocd.check-consulting.net

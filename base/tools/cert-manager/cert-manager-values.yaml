@@ -1,6 +1,13 @@
 crds:
   enabled: true
 
+# IRSA: permet au pod cert-manager d'assumer le role AWS cree par
+# aws-eks/cert-manager.tf (permissions Route53 DNS-01 sur check-consulting.net),
+# pour la resolution des challenges Let's Encrypt.
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::205493924920:role/role-formation-ecom-cert-manager
+
 resources:
   requests:
     cpu: 10m
